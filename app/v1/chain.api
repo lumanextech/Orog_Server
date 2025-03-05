@@ -1,0 +1,478 @@
+syntax = "v1"
+
+type Request {
+    Name string `path:"name,options=you|me"`
+}
+
+type Response {
+    Message string `json:"message"`
+}
+
+type StartRequest {
+    Chain string `path:"chain"`
+    Height int64 `path:"height"`
+}
+
+type GetMarketKlineRequest {
+    Chain string `path:"chain"`
+    MarketAddress string `path:"market_address"`
+    Internal string `form:"internal,options=1s|1m|5m|15m|30m|1h|4h|6h|1d"`
+    From int64 `form:"from"`
+    To int64 `form:"to"`
+}
+
+type MarketKlineResponse {
+    O float64 `json:"open"`
+    C float64 `json:"close"`
+    H float64 `json:"high"`
+    L float64 `json:"low"`
+    V float64 `json:"volume"`
+    Timestamp int64 `json:"time"`
+}
+
+type MarketKlineListResponse {
+    Items []*MarketKlineResponse `json:"items"`
+}
+
+type MarketRank {
+    Id int64 `json:"id"`
+    Chain string `json:"chain"`
+    Address string `json:"address"`                                  //市场地址
+    QuoteMintAddress string `json:"quote_mint_address"`              //新增-代币地址
+    QuoteTokenAddress string `json:"quote_token_address"`            //新增-代币池中地址
+    BaseTokenAddress string `json:"base_token_address"`              //新增-基础币池中地址
+    BaseMintAddress string `json:"base_mint_address"`                //新增-基础币地址（sol网络下默认wsol）
+    Symbol string `json:"symbol"`                                    //quoteSymbol
+    Logo string `json:"logo"`
+    Price float64 `json:"price"`                                     //quotePrice
+    BasePrice float64 `json:"base_price"`                            //主网币地址
+    Swaps int64 `json:"swaps"`
+    Volume float64 `json:"volume"`
+    Liquidity float64 `json:"liquidity"`                             //当前流动性 USD
+    MarketCap float64 `json:"market_cap"`
+    HotLevel int64 `json:"hot_level"`
+    PoolCreationTimestamp int64 `json:"pool_creation_timestamp"`
+    HolderCount int64 `json:"holder_count"`
+    TwitterUsername string `json:"twitter_username"`
+    Website string `json:"website"`
+    Telegram string `json:"telegram"`
+    OpenTimestamp int64 `json:"open_timestamp"`
+    PriceChangePercent1M float64 `json:"price_change_percent1m"`
+    PriceChangePercent5M float64 `json:"price_change_percent5m"`
+    PriceChangePercent30M float64 `json:"price_change_percent30m"`   //新增-30分钟涨跌幅
+    PriceChangePercent1H float64 `json:"price_change_percent1h"`
+    PriceChangePercent6H float64 `json:"price_change_percent6h"`
+    PriceChangePercent24H float64 `json:"price_change_percent24h"`
+    Buys int64 `json:"buys"`
+    Sells int64 `json:"sells"`
+    InitialLiquidity float64 `json:"initial_liquidity"`              //初始化流动性 USD
+    IsShowAlert bool `json:"is_show_alert"`                          //是否提示警告
+    Top10HolderRate float64 `json:"top_10_holder_rate"`              //top10的持仓用户是否大于30%的总供应量
+    RenouncedMint int64 `json:"renounced_mint"`                      //禁止挖矿
+    RenouncedFreezeAccount int64 `json:"renounced_freeze_account"`   //禁用冻结权限
+    AuditLPBurned int64 `json:"audit_lp_burned"`                     //lp是否已销毁
+    Launchpad string `json:"launchpad"`
+    CreatorTokenStatus string `json:"creator_token_status"`
+    CreatorClose bool `json:"creator_close"`
+}
+
+type (
+    GetMarketRankListRequest {
+        Chain string `path:"chain"`
+        Period string `path:"period,options=1m|5m|30m|1h|6h|12h|1d"`
+        Page int64 `form:"page"`
+        Size int64 `form:"size,default=1000"`
+        OrderBy string `form:"order_by"`
+        Direction string `form:"direction,default=desc"`
+        Filters string `form:"filters[],optional"`
+    }
+    MarketRankListResponse {
+        Total int64 `json:"total"`
+        List []*MarketRank `json:"list"`
+    }
+)
+
+type (
+    GetTrendingMarketRequest {
+        Chain string `path:"chain"`
+        Period string `path:"period,options=1m|5m|30m|1h|6h|12h|1d"`
+        Page int64 `form:"page"`
+        Size int64 `form:"size,default=1000"`
+        OrderBy string `form:"order_by"`
+        Direction string `form:"direction,default=desc"`
+        Filters string `form:"filters[],optional"`
+    }
+    GetTrendingMarketResponse {
+        Total int64 `json:"total"`
+        List []*MarketRank `json:"list"`
+    }
+)
+
+type (
+    GetXTopRequest {
+        Chain string `path:"chain"`
+        Period string `path:"period,options=1d|7d|30d"`
+        Page int64 `form:"page,default=1"`
+        Size int64 `form:"size,default=1000"`
+    }
+    GetXTopResponse {
+        Total int64 `json:"total"`
+        List []*XTop `json:"list"`
+    }
+)
+
+type XTop {
+    Id int64 `json:"id"`
+    Plate string `json:"plate"`
+    PlateTrend bool `json:"plate_trend"`
+    PlateMarketCap float64 `json:"plate_market_cap"`
+    PlateSwaps float64 `json:"plate_swaps"`
+    PlateMarket []*Plate `json:"plate_market"`
+}
+
+type Plate {
+    Id int64 `json:"id"`
+    Logo string `json:"logo"`
+    Symbol string `json:"symbol"`
+    Chain string `json:"chain"`
+    Address string `json:"address"`
+    QuoteMintAddress string `json:"quote_mint_address"`
+    MarketCap float64 `json:"market_cap"`
+    Volume float64 `json:"volume"`
+    Price float64 `json:"price"`
+    InitialLiquidity float64 `json:"initial_liquidity"`
+    Liquidity float64 `json:"liquidity"`
+    Trend bool `json:"trend"`
+    Telegram string `json:"telegram"`
+    TwitterUsername string `json:"twitter_username"`
+    Website string `json:"website"`
+}
+
+type (
+    GetXTopMarketRequest {
+        Chain string `path:"chain"`
+        Period string `path:"period,options=1d|7d|30d"`
+        Page int64 `form:"page"`
+        Size int64 `form:"size,default=1000"`
+        OrderBy string `form:"order_by"`
+        Direction string `form:"direction,default=desc"`
+        Filters string `form:"filters[],optional"`
+    }
+    GetXTopMarketResponse {
+        Total int64 `json:"total"`
+        List []*MarketRank `json:"list"`
+    }
+)
+
+type (
+    GetMemeMarketRequest {
+        Chain string `path:"chain"`
+        PumpOrRaydium string `path:"pump_or_raydium,options=Pump|Raydium"`
+        Page int64 `form:"page"`
+        Size int64 `form:"size,default=1000"`
+        OrderBy string `form:"order_by"`
+        Direction string `form:"direction,default=desc"`
+        Performance string `form:"performance,optional"`
+    }
+    GetMemeMarketResponse {
+        Total int64 `json:"total"`
+        List []*MarketRank `json:"list"`
+    }
+)
+
+type (
+    GetFollowMarketRequest {
+        Chain string `path:"chain"`
+        Period string `path:"period"`
+        Page int64 `form:"page"`
+        Size int64 `form:"size,default=1000"`
+        OrderBy string `form:"order_by,default=liqudity"`
+        Direction string `form:"direction,default=desc"`
+        Filters string `form:"filters[],optional"`
+    }
+    GetFollowMarketResponse {
+        Total int64 `json:"total"`
+        List []*MarketRank `json:"list"`
+    }
+)
+
+type (
+    GetMarketByMintAddress {
+        Chain string `path:"chain"`
+        QuoteMint string `path:"quote_mint"`
+    }
+)
+
+type AccountCurrency {
+    Id int64 `json:"id"`                                                            // 唯一标识符
+    Chain string `json:"chain"`                                                     // 所属链
+    Logo string `json:"logo"`                                                       // 代币 logo 链接
+    Address string `json:"address"`                                                 // 代币地址
+    QuoteMintAddress string `json:"quote_mtin_address"`                             // 池地址
+    Symbol string `json:"symbol"`                                                   // 代币符号
+    Volume float64 `json:"volume"`                                                  // 交易量
+    Price float64 `json:"price"`                                                    // 代币价格
+    InitialLiquidity float64 `json:"initial_liquidity"`                             // 初始流动性
+    Liquidity float64 `json:"liquidity"`                                            // 当前流动性
+    Telegram string `json:"telegram"`                                               // Telegram 链接
+    TwitterUsername string `json:"twitter_username"`                                // Twitter 用户名
+    Website string `json:"website"`                                                 // 官网链接
+    Buys int64 `json:"buys"`                                                        // 买入笔数
+    Sells int64 `json:"sells"`                                                      // 卖出笔数
+    Swaps int64 `json:"swaps"`                                                      // 30天交换数量
+    UnrealizedProfits float64 `json:"unrealized_profits"`                           // 未实现盈亏
+    UnrealizedProfitsPercent float64 `json:"unrealized_profits_percent"`            // 未实现盈亏百分比
+    TotalProfit float64 `json:"total_profit"`                                       // 总盈亏
+    TotalProfitPercent float64 `json:"total_profit_percent"`                        // 总盈亏百分比
+    TokenPriceUsd float64 `json:"token_price_usd"`                                  // 余额（USDT）
+    TokenNum float64 `json:"token_num"`                                             // 代币数量当前地址
+    PositionPercent float64 `json:"position_percent"`                               // 仓位百分比
+    BoughtAvgPrice float64 `json:"bought_avg_price"`                                // 买入均价
+    SoldAvgPrice float64 `json:"sold_avg_price"`                                    // 卖出均价
+    MainPrice float64 `json:"main_price"`                                           // 主网币价
+    EnterAddress int64 `json:"enter_address"`                                       // 代币进入地址的时间戳
+}
+
+type (
+    GetSearchCurrencyRequest {
+        Chain string `path:"chain"`
+        Page int64 `form:"page"`
+        Size int64 `form:"size,default=1000"`
+        Query string `form:"q,optional"`
+    }
+    GetSearchCurrencyResponse {
+        Total int64 `json:"total"`
+        List []*Currency `json:"list"`
+    }
+)
+
+type Currency {
+    Follow bool `json:"follow"`                          // 是否关注
+    Logo string `json:"logo"`                            // logo
+    Symbol string `json:"symbol"`                        // 货币符号
+    Chain string `json:"chain"`                          // 链
+    Address string `json:"address"`                      // 代币地址
+    QuoteMintAddress string `json:"quote_mint_address"`  // 池地址
+    Liquidity float64 `json:"liquidity"`                 // 24小时池流动性
+    Volume24H float64 `json:"volume_24h"`                // 池交易量
+}
+
+type (
+    GetMarketActivityRequest {
+        Chain string `path:"chain"`
+        MarketAddress string `path:"market_address"`
+        Page int64 `form:"page"`
+        Size int64 `form:"size,default=1000"`
+        OrderBy string `form:"order_by,default=created_timestamp"`
+        Direction string `form:"direction,default=desc"`
+    }
+    GetMarketActivityResponse {
+        Total int64 `json:"total"`
+        List []*Activity `json:"list"`
+    }
+)
+
+type Activity {
+    MakerAddress string `json:"maker_address"`                                // 交易发起者地址
+    BaseAmount float64 `json:"base_amount"`                    // 基础货币的交易量
+    QuoteAmount float64 `json:"quote_amount"`                  // 报价货币的交易量
+    Volume float64 `json:"volume"`                             // 交易金额（以美元计）
+    Timestamp int64 `json:"timestamp"`                         // 交易时间戳
+    SwapType int64 `json:"swap_type"`                                  // 交易类型（buy/sell）
+    TxHash string `json:"tx_hash"`                             // 交易哈希
+    QuotePrice float64 `json:"quote_price"`                        // 交易价格（以美元计）
+    MakerTags []string `json:"maker_tags"`                     // 发起者的标签
+    MakerTwitterName string `json:"maker_twitter_name"`        // 发起者的 Twitter 用户名
+    MakerTwitterUser string `json:"maker_twitter_username"`    // 发起者的 Twitter 显示名
+    MakerName string `json:"maker_name"`                       // 发起者的名称
+    MakerAvatar string `json:"maker_avatar"`                   // 发起者的头像 URL
+    MakerENS string `json:"maker_ens"`                         // 发起者的 ENS 名称
+    MakerTokenTags []string `json:"maker_token_tags"`          // 发起者的代币标签
+    TokenAddress string `json:"token_address"`                 // 代币地址
+    QuoteAddress string `json:"quote_address"`                 // 报价货币地址
+    TotalTrade int `json:"total_trade"`                        // 总交易量
+    ID string `json:"id"`                                      // 唯一 ID
+    IsFollowing int `json:"is_following"`                      // 是否已关注（0/1）
+    IsOpenOrClose int `json:"is_open_or_close"`                // 是否开仓或平仓
+    BuyCostUSD float64 `json:"buy_cost_usd"`                   // 买入成本（以美元计）
+    Balance string `json:"balance"`                            // 当前余额
+    Cost float64 `json:"cost"`                                 // 总成本
+    HistoryBoughtAmount float64 `json:"history_bought_amount"` // 历史买入总量
+    HistorySoldIncome float64 `json:"history_sold_income"`     // 历史卖出收益
+    HistorySoldAmount float64 `json:"history_sold_amount"`     // 历史卖出总量
+    UnrealizedProfit float64 `json:"unrealized_profit"`        // 未实现利润
+    RealizedProfit float64 `json:"realized_profit"`            // 已实现利润
+}
+
+type (
+    GetMarketDetailRequest {
+        Chain string `path:"chain"`
+        MarketAddress string `path:"market_address"`
+    }
+    GetMarketDetailResponse {
+        Address string `json:"address"`                       // 市场地址
+        Symbol string `json:"symbol"`                         // 代币符号
+        Name string `json:"name"`                             // 代币名称
+        Decimals int64 `json:"decimals"`                      // 代币小数位
+        Logo string `json:"logo"`                             // 代币 Logo 链接
+        BiggestPoolAddr string `json:"biggest_pool_address"`  // 最大池地址
+        OpenTimestamp int64 `json:"open_timestamp"`           // 开放时间戳
+        HolderCount int64 `json:"holder_count"`               // 持有者数量
+        CirculatingSupply float64 `json:"circulating_supply"` // 流通供应量
+        TotalSupply float64 `json:"total_supply"`             // 总供应量
+        MaxSupply float64 `json:"max_supply"`                 // 最大供应量
+        Liquidity float64 `json:"liquidity"`                  // 流动性
+        CreationTimestamp int64 `json:"creation_timestamp"`   // 创建时间戳
+        BasePrice float64 `json:"base_price"`                 // 流动性
+        Follow bool `json:"follow"`                           // 是否关注
+        Pool PoolDetail `json:"pool"`                         // 池详情
+        Dev DevDetail `json:"dev"`                            // 开发者信息
+        Price PriceDetail `json:"price"`                      // 价格详情
+    }
+)
+
+type PoolDetail {
+    Address string `json:"address"`
+    QuoteMintAddress string `json:"quote_mint_address"`
+    QuoteAddress string `json:"quote_address"`
+    QuoteSymbol string `json:"quote_symbol"`
+    Liquidity float64 `json:"liquidity"`
+    BaseReserve float64 `json:"base_reserve"`
+    QuoteReserve float64 `json:"quote_reserve"`
+    InitialLiquidity float64 `json:"initial_liquidity"`
+    InitialBaseReserve float64 `json:"initial_base_reserve"`
+    InitialQuoteReserve float64 `json:"initial_quote_reserve"`
+    CreationTimestamp int64 `json:"creation_timestamp"`
+    BaseReserveValue float64 `json:"base_reserve_value"`
+    QuoteReserveValue float64 `json:"quote_reserve_value"`
+    QuoteVaultAddress string `json:"quote_vault_address"`
+    BaseVaultAddress string `json:"base_vault_address"`
+    Creator string `json:"creator"`
+    Exchange string `json:"exchange"`
+    Token0Address string `json:"token0_address"`
+    Token1Address string `json:"token1_address"`
+    BaseAddress string `json:"base_address"`
+}
+
+type DevDetail {
+    Address string `json:"address"`
+    CreatorAddress string `json:"creator_address"`
+    CreatorTokenBalance float64 `json:"creator_token_balance"`
+    CreatorTokenStatus bool `json:"creator_token_status"`
+    Top10HolderRate float64 `json:"top_10_holder_rate"`
+    Telegram string `json:"telegram"`
+    TwitterUsername string `json:"twitter_username"`
+    Website string `json:"website"`
+}
+
+type PriceDetail {
+    Address string `json:"address"`
+    Price float64 `json:"price"`
+    Price1m float64 `json:"price_1m"`
+    Price5m float64 `json:"price_5m"`
+    Price1h float64 `json:"price_1h"`
+    Price6h float64 `json:"price_6h"`
+    Price24h float64 `json:"price_24h"`
+    Buys1m float64 `json:"buys_1m"`
+    Buys5m float64 `json:"buys_5m"`
+    Buys1h float64 `json:"buys_1h"`
+    Buys6h float64 `json:"buys_6h"`
+    Buys24h float64 `json:"buys_24h"`
+    Sells1m float64 `json:"sells_1m"`
+    Sells5m float64 `json:"sells_5m"`
+    Sells1h float64 `json:"sells_1h"`
+    Sells6h float64 `json:"sells_6h"`
+    Sells24h float64 `json:"sells_24h"`
+    Volume1m float64 `json:"volume_1m"`
+    Volume5m float64 `json:"volume_5m"`
+    Volume1h float64 `json:"volume_1h"`
+    Volume6h float64 `json:"volume_6h"`
+    Volume24h float64 `json:"volume_24h"`
+    BuyVolume1m float64 `json:"buy_volume_1m"`
+    BuyVolume5m float64 `json:"buy_volume_5m"`
+    BuyVolume1h float64 `json:"buy_volume_1h"`
+    BuyVolume6h float64 `json:"buy_volume_6h"`
+    BuyVolume24h float64 `json:"buy_volume_24h"`
+    SellVolume1m float64 `json:"sell_volume_1m"`
+    SellVolume5m float64 `json:"sell_volume_5m"`
+    SellVolume1h float64 `json:"sell_volume_1h"`
+    SellVolume6h float64 `json:"sell_volume_6h"`
+    SellVolume24h float64 `json:"sell_volume_24h"`
+    MarketCap float64 `json:"market_cap"`
+    Volume float64 `json:"volume"`
+    Swaps int64 `json:"swaps"`
+    Sells int64 `json:"sells"`
+    Buys int64 `json:"buys"`
+}
+
+@server(
+    //          jwt:        Auth
+    //        middleware: AuthInterceptor
+    prefix:   /defi/quotation/v1
+    group: defi_quotation_v1
+    timeout:  3s
+    maxBytes: 1048576
+)
+service app-api {
+    @handler StartHandler
+    get /start/:chain/:height (StartRequest) returns (Response)
+
+    @handler MarketKlineHandler
+    get /market/kline/:chain/:market_address (GetMarketKlineRequest) returns (MarketKlineListResponse)
+
+    // trending
+    @handler GetTrendingMarketHandler
+    get /market/rank/:chain/swaps/:period (GetTrendingMarketRequest) returns (GetTrendingMarketResponse)
+
+    // 根据CA查询市场信息
+    @handler GetMarketInfoByQuoteMintHandler
+    get /market/:chain/:quote_mint (GetMarketByMintAddress) returns (MarketRank)
+
+    // Xtop板块
+    @handler GetXTopHandler
+    get /x/rank/:chain/:period (GetXTopRequest) returns (GetXTopResponse)
+
+    // xtop行情列表
+    @handler GetXTopMarketHandler
+    get /xtop/rank/:chain/swaps/:period (GetXTopMarketRequest) returns (GetXTopMarketResponse)
+
+    // meme行情列表
+    @handler GetMemeMarketHandler
+    get /meme/rank/:chain/:pump_or_raydium (GetMemeMarketRequest) returns (GetMemeMarketResponse)
+
+    // Activity交易实时
+    @handler MarketActivityHandler
+    get /market/activity/:chain/:market_address (GetMarketActivityRequest) returns (GetMarketActivityResponse)
+}
+
+@server(
+    middleware: AuthInterceptor
+    prefix:   /defi/quotation/v1
+    group: defi_quotation_v1
+    timeout:  3s
+    maxBytes: 1048576
+)
+
+service app-api {
+    // 根据marketAddress查询交易详情
+    @handler MarketDetailHandler
+    get /market/:chain/detail/:market_address (GetMarketDetailRequest) returns (GetMarketDetailResponse)
+
+    // 搜索
+    @handler SearchCurrencyHandler
+    get /tokens/:chain/search (GetSearchCurrencyRequest) returns (GetSearchCurrencyResponse)
+}
+
+@server(
+    jwt: Auth
+    prefix:   /defi/quotation/v1
+    group: defi_quotation_v1
+    timeout:  3s
+    maxBytes: 1048576
+)
+
+service app-api {
+    // follow行情列表
+    @handler GetFollowMarketHandler
+    get /follow/rank/:chain/swaps/:period (GetFollowMarketRequest) returns (GetFollowMarketResponse)
+}

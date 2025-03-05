@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package trade;
+
+option go_package = "github.com/simance-ai/smdx/rpcx/chains/common/trade";
+
+message TradeRequest {
+  int64 market_id = 1; // market id
+  int64 account_id = 2; // account id
+  int64 trade_type = 3; // 0: buy, 1: sell
+  float trade_base_amount = 4; // amount of base token
+  float trade_quote_amount = 5; // amount of quote token
+  int64 trade_mode = 6; // 0: normal, 1: fast, 3: priority
+  float trade_fee = 7; // fee rate
+  float trade_slippage = 8; // slippage rate
+  float open_mev = 9; // open mev
+}

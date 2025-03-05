@@ -1,0 +1,12 @@
+Name: eth.rpc
+ListenOn: 0.0.0.0:8080
+Etcd:
+  Hosts:
+    - ${ETCD_HOSTS}:2379
+  Key: eth.rpc
+  User: ${ETCD_USER}
+  Pass: ${ETCD_PASS}
+
+PkEncode:
+  Key: ${PK_ENCODE_KEY}
+  Iv: ${PK_ENCODE_IV}

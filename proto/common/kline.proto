@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package kline;
+
+option go_package = "github.com/simance-ai/smdx/rpcx/chains/common/kline";
+
+message IntervalData {
+  string chain = 1;
+  double c = 2;
+  double h = 3;
+  double l = 4;
+  double o = 5;
+  int64 timestamp = 6;
+  double v = 7;
+  string quote_address = 8; //token address
+  string market_address = 9; //market address
+  string interval = 10;
+}

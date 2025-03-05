@@ -1,0 +1,97 @@
+Name: sol.rpc
+ListenOn: 0.0.0.0:8085
+Etcd:
+  Hosts:
+  - ${ETCD_HOSTS}:2379
+  Key: sol.rpc
+  User: ${ETCD_USER}
+  Pass: ${ETCD_PASS}
+Log:
+  Mode: file
+  Level: info
+  Path: /tmp/logs/sol
+  Rotation: daily
+
+AccountClientConf:
+  Etcd:
+    Hosts:
+      - ${ETCD_HOSTS}:2379
+    Key: account.rpc
+
+WsClientConf:
+  Etcd:
+    Hosts:
+      - ${ETCD_HOSTS}:2379
+    Key: ws.rpc
+
+Cache:
+  Redis:
+    - Host: [填自己的]
+      Tls: false
+      Pass: "[填自己的]"
+
+PgSqlConf:
+  Username: [填自己的]
+  Password: [填自己的]
+  Path: [填自己的]
+  Port: 37693
+  SslMode: disable
+  TimeZone: Asia/Shanghai
+  Dbname: tsdb
+  LogMode: dev
+  LogColorful: true
+  SlowThreshold: 1000
+
+PgSqlReadConf:
+  Username: [填自己的]
+  Password: [填自己的]
+  Path: [填自己的]
+  Port: 37693
+  SslMode: disable
+  TimeZone: Asia/Shanghai
+  Dbname: tsdb
+
+KafkaConf:
+  Name: chains_sol
+  Brokers:
+    - [填自己的]:9093
+    - [填自己的]:9093
+    - [填自己的]:9093
+  Group: beam-io
+  Topic: market_tx_test
+  Consumers: 8
+  Processors: 8
+  Username: [填自己的] #SASL用户名。如果是SSL接入点或SASL接入点，需配置该参数
+  Password: [填自己的]
+  CaFile: ${KAFKA_CA_FILE}  #如果是SSL接入点，需配置该参数
+  Protocol: plain
+
+Chains:
+  - Name: ankr2
+    Rpc: https://rpc.ankr.com/solana/[填自己的]
+    Ws: wss://rpc.ankr.com/solana/ws/[填自己的]
+  - Name: ankr3
+    Rpc: https://rpc.ankr.com/solana/[填自己的]
+    Ws: wss://rpc.ankr.com/solana/ws/[填自己的]
+  - Name: jito1
+    Rpc: https://rpc.ankr.com/solana/[填自己的]
+    Ws: wss://rpc.ankr.com/solana/ws/[填自己的]
+
+
+PkEncode:
+  Key: ${PK_ENCODE_KEY}
+  Iv: ${PK_ENCODE_IV}
+
+
+OkxOsConf:
+  Name: okx
+  Host: https://www.okx.com
+  ApiKey: [填自己的]
+  ApiSecret: [填自己的]
+  Passphrase: [填自己的]
+
+SolScanConf:
+  Name: solscan
+  Host: https://pro-api.solscan.io
+  ApiKey: [填自己的]
+

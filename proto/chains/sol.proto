@@ -1,0 +1,268 @@
+syntax = "proto3";
+
+package sol;
+
+import "common/trade.proto";
+import "common/tx.proto";
+
+option go_package = "./sol";
+
+message Request {
+  string ping = 1;
+}
+
+message Response {
+  string message = 1;
+}
+
+message GetTxByHashRequest {
+  string tx_hash = 1;
+}
+
+message Tx {
+  tx.Tx result = 1;
+}
+
+message TradeRequest {
+  trade.TradeRequest trade_request = 1;
+}
+
+message StartRequest {
+  int64 height = 1;
+}
+
+message Page {
+  int64 page = 1;
+  int64 size = 2;
+}
+
+message MarketListResponse {
+  int64 total = 1;
+  repeated tx.Market list = 2;
+}
+
+message RealTimeMarketListResponse {
+  int64 total = 1;
+  repeated tx.RealTimeMarket list = 2;
+}
+
+message GetMarketKlineRequest {
+  string market_address = 1;
+  int64 end_timestamp = 3;
+  string interval = 4; //1s 1m 5m 15m 30m 1h 4h 6h 1d
+}
+
+message MarketKlineListResponse {
+  repeated tx.MarketKline list = 1;
+}
+
+message GetMarketListRequest {
+  int64 page = 1;
+  int64 size = 2;
+  string order_by = 3;
+  string direction = 4;
+  string filters = 5;
+  int64 limit = 6;
+  string performance = 7;
+  string period = 8; //1s 1m 5m 15m 30m 1h 4h 6h 1d
+  string pump_or_raydium = 9; // pump raydium
+  string search_value = 10;
+  string market_address = 11;
+  repeated string token_address_list = 12;
+}
+
+message GetMarketInfoRequest {
+  string market_address = 1;
+}
+
+message MarketInfoResponse {
+  tx.Market market = 1;
+}
+
+message GetMemeMarketListRequest {
+  int64 page = 1;
+  int64 size = 2;
+  string order_by = 3;
+  string direction = 4;
+  string performance = 5;
+  string pump_or_raydium = 6; // pump raydium
+}
+
+message GetMarketInfoByQuoteMintRequest {
+  string quote_mint = 1;
+}
+
+message SearchCurrencyListResponse {
+  int64 total = 1;
+  repeated Currency list = 2;
+}
+
+message Currency {
+  bool follow = 1;                 // 是否关注
+  string logo = 2;                 // logo
+  string symbol = 3;               // 货币符号
+  string chain = 4;                // 链
+  string address = 5;              // 代币地址
+  string quote_mint_address = 6;         // 池地址
+  double liquidity = 7;         // 24小时池流动性
+  double volume_24 = 8;               // 池交易量
+}
+
+message MarketActivityListResponse {
+  int64 total = 1;
+  repeated Activity list = 2;
+}
+
+message Activity {
+  string maker = 1;                // 交易发起者地址
+  double base_amount = 2;          // 基础货币的交易量
+  double quote_amount = 3;         // 报价货币的交易量
+  double amount_usd = 4;           // 交易金额（以美元计）
+  int64 timestamp = 5;             // 交易时间戳
+  int64 type = 6;                 // 交易类型（-1TxUnknown 0created, 1buy, 2sell, 3add_liquidity, 4remove_liquidity）
+  string tx_hash = 7;              // 交易哈希
+  double price_usd = 8;            // 交易价格（以美元计）
+  repeated string maker_tags = 9;  // 发起者的标签
+  string maker_twitter_name = 10;  // 发起者的 Twitter 名称，可选
+  string maker_twitter_username = 11; // 发起者的 Twitter 用户名，可选
+  string maker_name = 12;          // 发起者的名称，可选
+  string maker_avatar = 13;        // 发起者的头像，可选
+  string maker_ens = 14;           // 发起者的 ENS 名称，可选
+  repeated string maker_token_tags = 15; // 发起者的代币标签
+  string token_address = 16;       // 代币地址
+  string quote_address = 17;       // 报价货币地址
+  int64 total_trade = 18;          // 总交易量
+  string id = 19;                  // 唯一 ID
+  int32 is_following = 20;         // 是否已关注（0/1）
+  int32 is_open_or_close = 21;     // 是否开仓或平仓
+  double buy_cost_usd = 22;        // 买入成本（以美元计）
+  string balance = 23;             // 当前余额
+  double cost = 24;                // 总成本
+  double history_bought_amount = 25; // 历史买入总量
+  double history_sold_income = 26; // 历史卖出收益
+  double history_sold_amount = 27; // 历史卖出总量
+  double unrealized_profit = 28;   // 未实现利润
+  double realized_profit = 29;     // 已实现利润
+}
+
+message MarketDetailResponse {
+  string address = 1;           // 代币地址
+  string symbol = 2;            // 代币符号
+  string name = 3;              // 代币名称
+  int64 decimals = 4;           // 小数位数
+  string logo = 5;              // 代币 logo 链接
+  string biggest_pool_address = 6; // 最大流动池地址
+  int64 open_timestamp = 7;     // 开始时间戳
+  int64 creation_timestamp = 8; // 创建时间戳
+  int64 holder_count = 9;       // 持有者数量
+  double circulating_supply = 10; // 流通量
+  double total_supply = 11;     // 总供应量
+  double max_supply = 12;       // 最大供应量
+  double liquidity = 13;        // 流动性
+  double price = 14;            // 当前价格
+  double base_price = 19;       // 总流通价格
+  bool follow = 18;             // 是否收藏
+
+   Pool pool = 15;          // 池信息
+   Developer dev =16;       // 开发者信息
+   PriceInfo price_info =17;// 价格信息
+}
+
+message Pool {
+  string address = 1;           // 代币地址
+  string quote_mint_address = 2;      // 流动池地址
+  string quote_address = 3;     // 报价代币地址
+  string quote_symbol = 4;      // 报价代币符号
+  double liquidity = 5;         // 流动性
+  double base_reserve = 6;      // 基础代币储量
+  double quote_reserve = 7;     // 报价代币储量
+  double initial_liquidity = 8; // 初始流动性
+  double initial_base_reserve = 9; // 初始基础代币储量
+  double initial_quote_reserve = 10; // 初始报价代币储量
+  int64 creation_timestamp = 11; // 创建时间戳
+}
+
+message Developer {
+  string address = 1;           // 代币地址
+  string creator_address = 2;   // 创作者地址
+  double creator_token_balance = 3; // 创作者代币余额
+  bool creator_token_status = 4;  // 创作者代币状态
+  double top_10_holder_rate = 5;    // 前10持有人占比
+  string telegram = 6;           // 代币地址
+  string twitter_username = 7;           // 代币地址
+  string website = 8;           // 代币地址
+}
+
+message PriceInfo {
+  string address = 35;
+  double price = 1;             // 当前价格
+  double price_1m = 2;          // 1分钟价格
+  double price_5m = 3;          // 5分钟价格
+  double price_1h = 4;          // 1小时价格
+  double price_6h = 5;          // 6小时价格
+  double price_24h = 6;         // 24小时价格
+  double buys_1m = 7;           // 1分钟买入次数
+  double buys_5m = 8;           // 5分钟买入次数
+  double buys_1h = 9;           // 1小时买入次数
+  double buys_6h = 10;          // 6小时买入次数
+  double buys_24h = 11;         // 24小时买入次数
+  double sells_1m = 12;         // 1分钟卖出次数
+  double sells_5m = 13;         // 5分钟卖出次数
+  double sells_1h = 14;         // 1小时卖出次数
+  double sells_6h = 15;         // 6小时卖出次数
+  double sells_24h = 16;        // 24小时卖出次数
+  double volume_1m = 17;        // 1分钟交易量
+  double volume_5m = 18;        // 5分钟交易量
+  double volume_1h = 19;        // 1小时交易量
+  double volume_6h = 20;        // 6小时交易量
+  double volume_24h = 21;       // 24小时交易量
+  double buy_volume_1m = 22;    // 1分钟买入量
+  double buy_volume_5m = 23;    // 5分钟买入量
+  double buy_volume_1h = 24;    // 1小时买入量
+  double buy_volume_6h = 25;    // 6小时买入量
+  double buy_volume_24h = 26;   // 24小时买入量
+  double sell_volume_1m = 27;   // 1分钟卖出量
+  double sell_volume_5m = 28;   // 5分钟卖出量
+  double sell_volume_1h = 29;   // 1小时卖出量
+  double sell_volume_6h = 30;   // 6小时卖出量
+  double sell_volume_24h = 31;  // 24小时卖出量
+  int64 swaps = 32;            // 总交换次数
+  int64 sells = 33;            // 总卖出次数
+  int64 buys = 34;             // 总买入次数
+  double market_cap = 36;         // 总市值
+  double volume = 37;
+}
+
+
+
+service Sol {
+  rpc Ping(Request) returns (Response);
+
+  rpc GetTxByHash(GetTxByHashRequest) returns (Tx);
+
+  rpc Start(StartRequest) returns (Response);
+
+  rpc Trade(TradeRequest) returns (Response);
+
+  rpc GetMarketInfo(GetMarketInfoRequest) returns (MarketInfoResponse);
+
+  rpc GetMarketInfoByQuoteMint(GetMarketInfoByQuoteMintRequest) returns (MarketInfoResponse);
+
+  rpc GetMarketList(GetMarketListRequest) returns (MarketListResponse);
+
+  rpc GetMarketKlineList(GetMarketKlineRequest) returns (MarketKlineListResponse);
+
+  rpc GetTrendingMarket(GetMarketListRequest) returns (RealTimeMarketListResponse);
+
+  rpc GetXTopMarketList(GetMarketListRequest) returns (RealTimeMarketListResponse);
+
+  rpc GetMemeMarketList(GetMarketListRequest) returns (RealTimeMarketListResponse);
+
+  rpc GetFollowMarketList(GetMarketListRequest) returns (RealTimeMarketListResponse);
+
+  rpc SearchCurrencyList(GetMarketListRequest) returns (SearchCurrencyListResponse);
+
+  rpc MarketActivityList(GetMarketListRequest) returns (MarketActivityListResponse);
+
+  rpc GetMarketDetail(GetMarketListRequest) returns (MarketDetailResponse);
+}

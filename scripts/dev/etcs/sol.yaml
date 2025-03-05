@@ -1,0 +1,106 @@
+Name: sol.rpc
+ListenOn: 0.0.0.0:8080
+Etcd:
+  Hosts:
+    - ${ETCD_HOSTS}:2379
+  Key: sol.rpc
+  User: ${ETCD_USER}
+  Pass: ${ETCD_PASS}
+Log:
+  Mode: file
+  Level: info
+  Path: /tmp/logs/sol
+  Rotation: daily
+
+AccountClientConf:
+  Etcd:
+    Hosts:
+      - ${ETCD_HOSTS}:2379
+    Key: account.rpc
+
+WsClientConf:
+  Etcd:
+    Hosts:
+      - ${ETCD_HOSTS}:2379
+    Key: ws.rpc
+
+Cache:
+  Redis:
+    - Host: redis-10673.c36089.ap-seast-1-mz.ec2.cloud.rlrcp.com:10673
+      Tls: false
+      Pass: "fz04FIGXx12ECSanWksS9rQiXXvG1kEG"
+
+PgSqlConf:
+  Username: tsdbadmin
+  Password: v6kyj974m2fynhxt
+  Path: b2k2wp5hef.m3sjb1d5iz.tsdb.cloud.timescale.com
+  Port: 37693
+  SslMode: enable
+  TimeZone: Asia/Shanghai
+  Dbname: tsdb
+  LogMode: prod
+  LogColorful: true
+  SlowThreshold: 1000
+
+
+PgSqlReadConf:
+  Username: tsdbadmin
+  Password: v6kyj974m2fynhxt
+  Path: b2k2wp5hef.m3sjb1d5iz.tsdb.cloud.timescale.com
+  Port: 37693
+  SslMode: enable
+  TimeZone: Asia/Shanghai
+  Dbname: tsdb
+  LogMode: prod
+  LogColorful: true
+  SlowThreshold: 1000
+
+KafkaConf:
+  Name: chains_sol
+  Brokers:
+    - b-1.smdxtest.n2ny06.c3.kafka.ap-southeast-1.amazonaws.com:9096
+    - b-2.smdxtest.n2ny06.c3.kafka.ap-southeast-1.amazonaws.com:9096
+    - b-3.smdxtest.n2ny06.c3.kafka.ap-southeast-1.amazonaws.com:9096
+  Group: sol_market_tx_group_1
+  Topic: market_tx_test
+  Offset: first
+  Consumers: 6
+  Processors: 6
+  Username: lice  #SASL用户名。如果是SSL接入点或SASL接入点，需配置该参数
+  Password: lice-DTZkAwpzYsiv392460S0k9p7LCjWqmRj
+  CaFile: ${KAFKA_CA_FILE}  #如果是SSL接入点，需配置该参数
+  Protocol: scram-sha-512
+
+
+Chains:
+  #- Name: ankr1
+  #Rpc: https://rpc.ankr.com/solana/763862f5c29e2987c86c508d5b8e9509f48922cfed7c09279846b3c59afdf59f
+  #Ws: wss://rpc.ankr.com/solana/ws/763862f5c29e2987c86c508d5b8e9509f48922cfed7c09279846b3c59afdf59f
+  - Name: helius1
+    Rpc: https://rpc.ankr.com/solana/ca2e9a80c0f4ef05b2929ba07b2581b6a7df23748c20b71e0f178eecaed4b7ea
+    Ws: wss://rpc.ankr.com/solana/ws/ca2e9a80c0f4ef05b2929ba07b2581b6a7df23748c20b71e0f178eecaed4b7ea
+  - Name: helius1
+    Rpc: https://rpc.ankr.com/solana/ca2e9a80c0f4ef05b2929ba07b2581b6a7df23748c20b71e0f178eecaed4b7ea
+    Ws: wss://rpc.ankr.com/solana/ws/ca2e9a80c0f4ef05b2929ba07b2581b6a7df23748c20b71e0f178eecaed4b7ea
+  - Name: jito1
+    Rpc: https://rpc.ankr.com/solana/763862f5c29e2987c86c508d5b8e9509f48922cfed7c09279846b3c59afdf59f
+    Ws: wss://rpc.ankr.com/solana/ws/763862f5c29e2987c86c508d5b8e9509f48922cfed7c09279846b3c59afdf59f
+
+
+PkEncode:
+  Key: ${PK_ENCODE_KEY}
+  Iv: ${PK_ENCODE_IV}
+
+OkxOsConf:
+  Name: okx
+  Host: https://www.okx.com
+  ApiKey: e381056b-3c47-43c5-aa7f-1971547760aa
+  ApiSecret: D6058FC92B599F55D0883B5F89E9BF71
+  Passphrase: 555IloveZz@
+
+SolScanConf:
+  Name: solscan
+  Host: https://pro-api.solscan.io
+  ApiKey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkQXQiOjE3MzI4NjE3MzkwNjUsImVtYWlsIjoibWV0YW9mb0BnbWFpbC5jb20iLCJhY3Rpb24iOiJ0b2tlbi1hcGkiLCJhcGlWZXJzaW9uIjoidjIiLCJpYXQiOjE3MzI4NjE3Mzl9.-YZTl_emusf5GWyisipz5Ex8nxjvFjLnzww_yYpUkNU
+
+

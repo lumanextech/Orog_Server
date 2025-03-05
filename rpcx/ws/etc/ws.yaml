@@ -1,0 +1,70 @@
+Name: ws.rpc
+ListenOn: 0.0.0.0:8083
+Etcd:
+  Hosts:
+    - ${ETCD_HOSTS}:2379
+  Key: ws.rpc
+  User: ${ETCD_USER}
+  Pass: ${ETCD_PASS}
+Log:
+  Mode: file
+  Level: debug
+  Path: /tmp/logs/ws
+  Rotation: daily
+
+
+Rest:
+  Name: websocket-rest
+  Host: 0.0.0.0
+  Port: 3333
+  Timeout: 3000
+  CpuThreshold: 888
+
+Cache:
+  Redis:
+    - Host: [换成自己的]
+      Tls: false
+      Pass: "[换成自己的]"
+
+WebSocket:
+  ReadBufferSize: 1024
+  WriteBufferSize: 1024
+  WebsocketHandshakeTimeout: 3000
+  EnableCompression: 1
+  MessageFormat: 1
+
+App:
+  Secret: "Lbhi08lqB8k7bdKLKFsSyZwPygIOvwhX"
+
+MarketKlineTopicKafkaConf:
+  Name: chains_sol
+  Brokers:
+    - [换成自己的]:9093
+    - [换成自己的]:9093
+    - [换成自己的]:9093
+  Group: beam-io-ws
+  Topic: sol_market_kline_test
+  Consumers: 4
+  Processors: 4
+  Username: [换成自己的]  #SASL用户名。如果是SSL接入点或SASL接入点，需配置该参数
+  Password: [换成自己的]
+  CaFile: ${KAFKA_CA_FILE}  #如果是SSL接入点，需配置该参数
+  Protocol: plain
+  Offset: last
+
+MarketSwapTopicKafkaConf:
+  Name: chains_sol
+  Brokers:
+    - [换成自己的]:9093
+    - [换成自己的]:9093
+    - [换成自己的]:9093
+  Group: beam-io-ws
+  Topic: sol_market_swaps_test
+  Consumers: 4
+  Processors: 4
+  Username: [换成自己的]  #SASL用户名。如果是SSL接入点或SASL接入点，需配置该参数
+  Password: [换成自己的]
+  CaFile: ${KAFKA_CA_FILE}  #如果是SSL接入点，需配置该参数
+  Protocol: plain
+  Offset: last
+

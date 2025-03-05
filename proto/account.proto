@@ -1,0 +1,134 @@
+syntax = "proto3";
+
+package account;
+
+import "order.proto";
+option go_package="./account";
+
+message Request {
+  string ping = 1;
+}
+
+message RebateRequest {
+  repeated order.RebateOrder rebate_order_list = 1;
+}
+
+message Response {
+  string pong = 1;
+}
+
+
+message AccountRequest {
+  int64 id = 1;
+}
+
+message AccountResponse {
+  int64 id = 1;
+  string email = 2;
+  string mobile = 3;
+  string name = 4;
+  string pk = 5;
+}
+
+
+message AddTokenFollowRequest {
+  string address = 1; // 钱包地址
+  string chain = 2;// 链名
+  string tokenAddress = 3;
+}
+
+message AddTokenFollowResponse {
+  string message = 1;
+}
+
+
+message CheckAccountRequest {
+  string address = 1;
+}
+
+message CheckAccountResponse {
+  string address = 1;
+}
+
+message GetAccountInfoRequest {
+  string address = 1;
+  string chain = 2;
+}
+
+message GetAccountInfoResponse {
+  string username = 1;
+  double initialFunding = 2;
+  double funding = 3;
+  repeated double moneyPerDay = 4;
+  double unrealizedProfits = 5;
+  double totalProfit = 6;
+  int64 buy = 7;
+  int64 sell = 8;
+  string role = 9;
+  string inviteCode = 10;
+  repeated string rebateAddress = 11;
+  int64 rebateAddressTotal = 12;
+  double balance = 13;
+  double history_rebate = 14;
+  int64 create_at = 15;
+}
+
+message UpdateUserBaseInfoRequest {
+  string address = 1;
+  string chain = 2;
+  string username = 3;
+}
+
+message UpdateUserBaseInfoResponse {
+  string message = 1;
+}
+
+
+message IsTokenFollowedRequest {
+  string address = 1;
+  string tokenAddress = 2;
+  string chain = 3;
+}
+
+message IsTokenFollowedResponse {
+  bool followed = 1; //关注是 true 未关注是false
+}
+
+message GetFollowTokenListRequest {
+  string address = 1;
+  string chain = 2;
+}
+
+message GetFollowTokenListResponse {
+  repeated string tokenAddress = 1;
+}
+
+
+service Account {
+  rpc Ping(Request) returns(Response);
+
+  rpc Rebate(RebateRequest) returns(Response);
+
+  //获取Account信息(峰在用)
+  rpc GetAccount(AccountRequest) returns(AccountResponse);
+
+  rpc GetAccountInfo(GetAccountInfoRequest) returns(GetAccountInfoResponse);
+
+  //检查有没有Account没有创建
+  rpc CheckAccount(CheckAccountRequest) returns(CheckAccountResponse);
+
+  //关注token
+  rpc AddTokenFollow(AddTokenFollowRequest) returns(AddTokenFollowResponse);
+
+  //取消关注token
+  rpc RemoveTokenFollow(AddTokenFollowRequest) returns(AddTokenFollowResponse);
+
+  //更新用户基础信息
+  rpc UpdateUserBaseInfo(UpdateUserBaseInfoRequest) returns(UpdateUserBaseInfoResponse);
+
+  //用户是否收藏代币
+  rpc IsTokenFollowed(IsTokenFollowedRequest) returns(IsTokenFollowedResponse);
+
+  //获取用户关注的代币
+  rpc GetFollowTokenList(GetFollowTokenListRequest) returns(GetFollowTokenListResponse);
+}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package rebate;
+option go_package="./rebate";
+
+
+message RebateRequest {
+  string ping = 1;
+}
+
+message RebateResponse {
+  string pong = 1;
+}
+
+
+service Rebate {
+  rpc Ping(RebateRequest) returns(RebateResponse);
+}

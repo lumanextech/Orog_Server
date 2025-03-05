@@ -1,0 +1,20 @@
+Name: account.rpc
+ListenOn: 0.0.0.0:8081
+Etcd:
+  Hosts:
+  - ${ETCD_HOSTS}:2379
+  Key: account.rpc
+  User: ${ETCD_USER}
+  Pass: ${ETCD_PASS}
+
+PkEncode:
+  Key: ${PK_ENCODE_KEY}
+  Iv: ${PK_ENCODE_IV}
+
+Cache:
+  - Host: [填自己的]
+    Tls: false
+    Pass: "填自己的"
+    Type: "填自己的"
+DBConf:
+  DSN: [填自己的]

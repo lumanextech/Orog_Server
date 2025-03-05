@@ -1,0 +1,28 @@
+Name: order.rpc
+ListenOn: 0.0.0.0:8080
+
+Etcd:
+  Hosts:
+    - ${ETCD_HOSTS}:2379
+  Key: order.rpc
+  User: ${ETCD_USER}
+  Pass: ${ETCD_PASS}
+
+Log:
+  Mode: file
+  Level: info
+  Path: /tmp/logs/order
+  Rotation: daily
+
+PkEncode:
+  Key: ${PK_ENCODE_KEY}
+  Iv: ${PK_ENCODE_IV}
+
+Cache:
+  - Host: redis-10673.c36089.ap-seast-1-mz.ec2.cloud.rlrcp.com:10673
+    Tls: false
+    Pass: "fz04FIGXx12ECSanWksS9rQiXXvG1kEG"
+    Type: "cluster"
+
+DBConf:
+  DSN: postgresql://postgres.pzyypssxjavoscbxonvu:T6ubrwRXjYmBn2lU@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres?charset=utf8&parseTime=true

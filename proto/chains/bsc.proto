@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package bsc;
+option go_package="./bsc";
+
+message Request {
+  string ping = 1;
+}
+
+message Response {
+  string pong = 1;
+}
+
+service Bsc {
+  rpc Ping(Request) returns(Response);
+}

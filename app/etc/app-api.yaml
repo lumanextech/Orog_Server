@@ -1,0 +1,35 @@
+Name: app-api
+Host: 0.0.0.0
+Port: 8889
+Etcd:
+  Hosts:
+  - ${ETCD_HOSTS}:2379
+  Key: app-api.rpc
+  User: ${ETCD_USER}
+  Pass: ${ETCD_PASS}
+AccountClientConf:
+  Etcd:
+    Hosts:
+    - ${ETCD_HOSTS}:2379
+    Key: account.rpc
+OrderClientConf:
+  Etcd:
+    Hosts:
+    - ${ETCD_HOSTS}:2379
+    Key: order.rpc
+    
+SolClientConf:
+  Etcd:
+    Hosts:
+    - ${ETCD_HOSTS}:2379
+    Key: sol.rpc
+
+Auth:
+  AccessSecret: "orog2025"
+  AccessExpire: 604800
+
+Cache:
+  - Host: [填写自己的]
+    Tls: false
+    Pass: "[填写自己的]"
+    Type: "[填写自己的]"

@@ -1,0 +1,21 @@
+Name: rebate.rpc
+ListenOn: 0.0.0.0:8099
+Etcd:
+  Hosts:
+  - ${ETCD_HOSTS}:2379
+  Key: rebate.rpc
+
+AccountClientConf:
+  Etcd:
+    Hosts:
+      - ${ETCD_HOSTS}:2379
+    Key: account.rpc
+
+OrderClientConf:
+  Etcd:
+    Hosts:
+      - ${ETCD_HOSTS}:2379
+    Key: order.rpc
+
+Corn:
+  Rebate: "0 0 0 * * *"

@@ -1,0 +1,160 @@
+syntax = "proto3";
+
+package order;
+option go_package="./order";
+
+message Request {
+  string ping = 1;
+}
+
+message Response {
+  string pong = 1;
+}
+// 创建订单request
+message CreateOrderRequest {
+    string address = 1; // 用户地址
+    string chain_name = 2; // 链名称
+    string market_address = 3; // 市场地址 例如 8nQscazdi43VhXeB8M5KDBqC6Y8zmwkAG6Cg5mvJfqYS
+    int64 side = 4; // 买卖方向
+    int64 type = 5; // 订单类型 市价,限价单
+    double price = 6; // 价格 
+    double amount = 7; // 数量
+    int64 slippage = 8; // 滑点 默认百分之30
+    string transaction_hash = 9; // 交易hash
+}
+
+message CreateOrderResponse {
+  string order_hash = 1; // 订单hash
+  string status = 2; // 订单状态 等待成交/已成交/部分成交/已取消/已失败
+  string message = 3; // 订单消息
+}
+
+
+message QueryOrderRequest {
+  int64 id = 1; // 订单id
+}
+
+message QueryOrderResponse {
+  int64 id = 1; // 订单id
+  int64 status = 2; // 订单状态
+}
+
+
+
+message GetOrderDetailRequest {
+  int64 id = 1; // 订单id
+}
+
+message GetOrderDetailResponse {
+  int64 id = 1;                  // 订单id
+  string order_hash = 2;         // 订单hash
+  string status = 3;             // 订单状态
+  string message = 4;            // 订单消息
+  string chain_name = 5;         // 链名称
+  string market_address = 6;      // 市场地址
+  int64 side = 7;               // 买卖方向 (买/卖)
+  int64 type = 8;               // 订单类型 (限价单/市价单等)
+  string price = 9;              // 买入价格
+  string amount = 10;              // 数量 TODO: 需要修改 double
+  int64 slippage = 11;           // 滑点 TODO: 需要修改 double
+  string filled_amount = 12;     // 已成交数量
+  string remaining_amount = 13;  // 剩余数量
+  string filled_value = 14;      // 已成交总值
+  string remaining_value = 15;   // 剩余总值
+  string created_at = 16;        // 创建时间 TODO: 需要修改
+  string updated_at = 17;        // 更新时间 TODO: 需要修改
+  string user_id = 18;           // 用户ID TODO: 需要修改
+  string payment_status = 19;    // 支付状态 (已支付/未支付等)
+  string transaction_hash = 20;  // 交易hash (如果订单已经完成交易)
+  string cancel_reason = 21;     // 订单取消原因 (如果订单被取消)
+}
+
+// 获取订单列表request
+message GetOrderListRequest {
+  int64 page_size = 1;  // 每页数量
+  int64 page = 2;       // 页码，从1开始
+  int64 user_id = 3;    // 可选：按用户ID筛选
+  string status = 4;    // 可选：按状态筛选
+  string chain_name = 5; // 可选：按链名称筛选
+}
+
+message OrderListResponse {
+  repeated Orders order_list = 1;
+  int64 total_count = 2;
+  int64 page_size = 3;
+  int64 current_page = 4;
+}
+
+// 订单
+message Orders {
+  int64 id = 1;                  // 订单id
+  string order_hash = 2;         // 订单hash
+  string status = 3;             // 订单状态
+  string message = 4;            // 订单消息
+  string chain_name = 5;         // 链名称
+  string market_address = 6;      // 市场地址
+  int64 side = 7;               // 买卖方向 (买/卖)
+  int64 type = 8;               // 订单类型 (限价单/市价单等)
+  string price = 9;              // 买入价格
+  string amount = 10;              // 数量 TODO: 需要修改 double
+  int64  slippage = 11;           // 滑点 TODO: 需要修改 double
+  string filled_amount = 12;     // 已成交数量
+  string remaining_amount = 13;  // 剩余数量
+  string filled_value = 14;      // 已成交总值
+  string remaining_value = 15;   // 剩余总值
+  string created_at = 16;        // 创建时间 TODO: 需要修改
+  string updated_at = 17;        // 更新时间 TODO: 需要修改
+  string user_id = 18;           // 用户ID TODO: 需要修改
+  string payment_status = 19;    // 支付状态 (已支付/未支付等)
+  string transaction_hash = 20;  // 交易hash (如果订单已经完成交易)
+  string cancel_reason = 21;     // 订单取消原因 (如果订单被取消)
+}
+
+// 获取订单列表request
+message RebateOrderListRequest {
+}
+
+message RebateOrderListResponse {
+  repeated RebateOrder order_list = 1;
+}
+
+// 订单
+message RebateOrder {
+  int64 id = 1;                  // 订单id
+  string order_hash = 2;         // 订单hash
+  string chain_name = 5;         // 链名称
+  string market_address = 6;      // 市场地址
+  double filled_value = 14;      // 已成交总值
+  string user_address = 18;           // 用户ID
+  string transaction_hash = 20;  // 交易hash (如果订单已经完成交易)
+}
+
+// 获取订单列表request
+message UpdateRebateOrderRequest {
+  repeated int64 order_id_list = 1;
+}
+
+message GetAccountInfoRequest {
+  string address = 1;
+  string chain = 2;
+}
+
+message GetAccountInfoResponse {
+  double funding = 1;
+  repeated double moneyPerDay = 2;
+  double unrealizedProfits = 3;
+  double totalProfit = 4;
+  int64 buy = 5;
+  int64 sell = 6;
+}
+
+service Order {
+  rpc Ping(Request) returns(Response);
+  rpc CreateOrder(CreateOrderRequest) returns(CreateOrderResponse); // 创建订单 ✅
+  rpc QueryOrder(QueryOrderRequest) returns(QueryOrderResponse); // 查询订单 
+  rpc GetOrderDetail(GetOrderDetailRequest) returns(GetOrderDetailResponse); // 获取订单详情
+  rpc GetOrderList(GetOrderListRequest) returns(OrderListResponse); // 获取订单列表
+  rpc GetRebateOrderList(RebateOrderListRequest) returns(RebateOrderListResponse); // 获取返佣订单列表
+  rpc UpdateRebateOrder(UpdateRebateOrderRequest) returns(Response); // 获取返佣订单列表
+  rpc GetAccountOrderInfo(GetAccountInfoRequest) returns(GetAccountInfoResponse); // 获取地址下订单信息
+}

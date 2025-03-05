@@ -1,0 +1,176 @@
+syntax = "v1"
+
+type GetTokenRequest  {
+    PublicKey string `json:"publickey"` // 签名地址
+    Signature []byte `json:"signature"` // 签名
+}
+type GetTokenResponse  {
+    Token string `json:"token"` // token
+}
+
+type GetAccountRequest  {
+    Address string `form:"address"` //钱包地址
+    Period string `form:"period"` //周期 7d 30d
+}
+
+type GetAccountResponse  {
+    Nickname string `json:"nickname"`     // 昵称
+    InitialFunding float64 `json:"initialfunding"` // 初始资金
+    Funding float64 `json:"funding"` // 资金
+    MoneyPerDay []float64 `json:"moneyperday"` // 资金每日变化数组
+    UnrealizedProfits float64 `json:"unrealized_profits"` // 未实现盈亏
+    TotalProfit float64 `json:"total_profit"` // 总盈亏
+    Buy int64 `json:"buy"` // 买入次数
+    Sell int64 `json:"sell"` // 卖出次数
+    Role string `json:"role"`     // 昵称
+}
+
+type GetAccountSummaryRequest  {
+    Address string `json:"address"` // 账户地址
+}
+
+type AccountSummary  {
+    Id int64 `json:"id"` // 唯一标识符
+    Chain string `json:"chain"` // 所属链
+    Logo string `json:"logo"` // 代币 logo 链接
+    Address string `json:"address"` // 代币地址
+    PoolAddress string `json:"pool_address"` // 池地址
+    Sells int64 `json:"sells"` // 卖出笔数
+    SellsNum int64 `json:"sells_num"` // 卖出数量
+    SellsNumUSD int64 `json:"sells_num_usd"` // 卖入数量（美元）
+    BuysNumUSD int64 `json:"buys_num_usd"` // 买入数量（美元）
+    Buys int64 `json:"buys"` // 买入笔数
+    BuysNum int64 `json:"buys_num"` // 买入数量
+    Swaps int64 `json:"swaps"` // 30天交换数量
+    Symbol string `json:"symbol"` // 代币符号
+    Telegram string `json:"telegram"` // Telegram 链接
+    TwitterUsername string `json:"twitter_username"` // Twitter 用户名
+    Volume int64 `json:"volume"` // 交易量
+    Website string `json:"website"` // 官网链接
+    EnterAddress int64 `json:"enter_address"` // 代币进入地址的时间戳
+    UnrealizedProfits int64 `json:"unrealized_profits"` // 未实现盈亏
+    UnrealizedProfitsPercent int64 `json:"unrealized_profits_percent"` // 未实现盈亏百分比
+    TotalProfit int64 `json:"total_profit"` // 总盈亏
+    TotalProfitPercent int64 `json:"total_profit_percent"` // 总盈亏百分比
+    TokenPriceUSD int64 `json:"token_price_usd"` // 余额（USDT）
+    TokenNum int64 `json:"token_num"` // 代币数量当前地址
+    PositionPercent int64 `json:"position_percent"` // 仓位百分比
+    BoughtAvgPrice int64 `json:"bought_avg_price"` // 买入均价
+    SoldAvgPrice int64 `json:"sold_avg_price"` // 卖出均价
+    MainPrice int64 `json:"main_price"` // 主网币价
+}
+
+type GetAccountSummaryResponse  {
+    TotalCount int64 `json:"total_count"` // 总数
+    List []AccountSummary `json:"list"`
+}
+
+
+
+@server (
+	prefix:   /account/v1
+	group:    account_v1
+	timeout:  3s
+	maxBytes: 1048576 // 1MB
+)
+service app-api {
+    @doc (
+		summary:"根据钱包签名获取token"
+	)
+    @handler GetTokenHandler    
+    post /get_token (GetTokenRequest) returns (GetTokenResponse)    //根据钱包签名获取token
+
+    @doc (
+		summary:"根据address获取account信息"
+	)
+    @handler GetAccountHandler              
+    get /get_account (GetAccountRequest) returns (GetAccountResponse)  //根据address获取account信息
+
+   @doc (
+		summary:"根据address获取account历史买卖记录"
+	)
+    @handler GetAccountSummaryHandler
+    get /get_account_summary (GetAccountSummaryRequest) returns (GetAccountSummaryResponse) //根据address获取account历史买卖记录
+}
+
+
+type AddFollowTokenRequest  {
+    Token string `json:"token"` // 关注代币
+    Chain string `json:"chain_id"` // 关注的链
+}
+
+
+type CancelFollowTokenRequest  {
+    Token string `json:"token"` // 关注代币
+    Chain string `json:"chain_id"` // 关注的链
+}
+
+type AddFollowTokenResponse  {
+    Message string `json:"message"` // 消息
+}
+
+
+type CancelFollowTokenResponse {
+    Message string `json:"message"` // 消息
+}
+
+type UpdateAccountRequest  {
+    Name string `json:"name"` // 名称
+}
+
+type UpdateAccountResponse  {
+    Message string `json:"message"` // 消息
+}
+
+type AccountInfoRequest  {
+}
+
+type AccountInfoResponse  {
+    Nickname string `json:"nickname"`     // 昵称
+    InitialFunding float64 `json:"initial_funding"` // 初始资金
+    Funding float64 `json:"funding"` // 资金
+    MoneyPerDay []float64 `json:"money_per_day"` // 资金每日变化数组
+    UnrealizedProfits float64 `json:"unrealized_profits"` // 未实现盈亏
+    TotalProfit float64 `json:"total_profit"` // 总盈亏
+    Buy int64 `json:"buy"` // 买入次数
+    Sell int64 `json:"sell"` // 卖出次数
+    Role string `json:"role"`     // 角色
+    InviteCode string `json:"invite_code"` // 邀请码
+    RebateAddress []string `json:"rebate_address"` // 一级邀请人列表
+    RebateAddressTotal int64 `json:"rebate_address_total"`  // 邀请人总数
+    Balance float64 `json:"balance"` // 钱包余额
+    HistoryRebate float64 `json:"history_rebate"` // 历史收益
+}
+
+@server (
+    jwt:        Auth
+    prefix:   /account/v1
+    group:    account_v1
+    timeout:  3s
+    maxBytes: 1048576 // 1MB
+)
+service app-api {
+    @doc (
+		summary:"增加followToken"
+	)
+    @handler AddFollowTokenHandler
+    post /add_follow_token (AddFollowTokenRequest) returns (AddFollowTokenResponse)    //增加follow
+
+    @doc (
+		summary:"取消followToken"
+	)
+    @handler CancelFollowTokenHandler
+    post /cancel_follow_token (CancelFollowTokenRequest) returns (CancelFollowTokenResponse)    //取消follow
+
+    @doc (
+		summary:"修改acount用户信息"
+	)
+    @handler UpdateAccountHandler
+    post /update_account (UpdateAccountRequest) returns (UpdateAccountResponse)    // 修改acount用户信息
+
+    @doc (
+        summary:"通过token获取个人信息"
+    )
+    @handler AccountInfoHandler
+    get /account_info (AccountInfoRequest) returns (AccountInfoResponse)    // 获取account个人信息
+  }

@@ -1,0 +1,70 @@
+Name: ws.rpc
+ListenOn: 0.0.0.0:8083
+Etcd:
+  Hosts:
+    - ${ETCD_HOSTS}:2379
+  Key: ws.rpc
+  User: ${ETCD_USER}
+  Pass: ${ETCD_PASS}
+Log:
+  Mode: file
+  Level: info
+  Path: /tmp/logs/ws
+  Rotation: daily
+
+
+Rest:
+  Name: websocket-rest
+  Host: 0.0.0.0
+  Port: 3333
+  Timeout: 3000
+  CpuThreshold: 888
+
+
+Cache:
+  Redis:
+    - Host: redis-10673.c36089.ap-seast-1-mz.ec2.cloud.rlrcp.com:10673
+      Tls: false
+      Pass: "fz04FIGXx12ECSanWksS9rQiXXvG1kEG"
+
+WebSocket:
+  ReadBufferSize: 1024
+  WriteBufferSize: 1024
+  WebsocketHandshakeTimeout: 3000
+  EnableCompression: 1
+  MessageFormat: 1
+
+App:
+  Secret: "Lbhi08lqB8k7bdKLKFsSyZwPygIOvwhX"
+
+MarketKlineTopicKafkaConf:
+  Name: ws
+  Brokers:
+    - alikafka-pre-cn-wuf428qaz004-1.alikafka.aliyuncs.com:9093
+    - alikafka-pre-cn-wuf428qaz004-2.alikafka.aliyuncs.com:9093
+    - alikafka-pre-cn-wuf428qaz004-3.alikafka.aliyuncs.com:9093
+  Group: beam-io-ws-dev
+  Topic: sol_market_kline_test
+  Consumers: 12
+  Processors: 4
+  Username: alikafka_pre-cn-wuf428qaz004  #SASL用户名。如果是SSL接入点或SASL接入点，需配置该参数
+  Password: wYzozB93Bb03HOb2IUb2txDcpoOOuiUy
+  CaFile: ${KAFKA_CA_FILE}  #如果是SSL接入点，需配置该参数
+  Protocol: plain
+
+MarketSwapTopicKafkaConf:
+  Name: ws
+  Brokers:
+    - alikafka-pre-cn-wuf428qaz004-1.alikafka.aliyuncs.com:9093
+    - alikafka-pre-cn-wuf428qaz004-2.alikafka.aliyuncs.com:9093
+    - alikafka-pre-cn-wuf428qaz004-3.alikafka.aliyuncs.com:9093
+  Group: beam-io-ws-dev
+  Topic: sol_market_swaps_test
+  Consumers: 12
+  Processors: 4
+  Username: alikafka_pre-cn-wuf428qaz004  #SASL用户名。如果是SSL接入点或SASL接入点，需配置该参数
+  Password: wYzozB93Bb03HOb2IUb2txDcpoOOuiUy
+  CaFile: ${KAFKA_CA_FILE}  #如果是SSL接入点，需配置该参数
+  Protocol: plain
+
+

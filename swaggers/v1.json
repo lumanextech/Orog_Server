@@ -1,0 +1,2960 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "",
+    "version": ""
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/account/v1/add_follow_token": {
+      "post": {
+        "summary": "增加followToken",
+        "operationId": "AddFollowTokenHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AddFollowTokenResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddFollowTokenRequest"
+            }
+          }
+        ],
+        "tags": [
+          "account_v1"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/account/v1/cancel_follow_token": {
+      "post": {
+        "summary": "取消followToken",
+        "operationId": "CancelFollowTokenHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CancelFollowTokenResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CancelFollowTokenRequest"
+            }
+          }
+        ],
+        "tags": [
+          "account_v1"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/account/v1/get_account": {
+      "get": {
+        "summary": "根据address获取account信息",
+        "operationId": "GetAccountHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "address",
+            "description": "钱包地址",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "period",
+            "description": "周期 7d 30d",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "account_v1"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/account/v1/get_account_summary": {
+      "get": {
+        "summary": "根据address获取account历史买卖记录",
+        "operationId": "GetAccountSummaryHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetAccountSummaryResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "address",
+            "description": " 账户地址",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "account_v1"
+        ]
+      }
+    },
+    "/account/v1/get_token": {
+      "post": {
+        "summary": "根据钱包签名获取token",
+        "operationId": "GetTokenHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetTokenResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetTokenRequest"
+            }
+          }
+        ],
+        "tags": [
+          "account_v1"
+        ]
+      }
+    },
+    "/account/v1/update_account": {
+      "post": {
+        "summary": "修改acount用户信息",
+        "operationId": "UpdateAccountHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdateAccountResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateAccountRequest"
+            }
+          }
+        ],
+        "tags": [
+          "account_v1"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/defi/quotation/v1/follow/rank/{chain}/swaps/{period}": {
+      "get": {
+        "operationId": "GetFollowMarketHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetFollowMarketResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "chain",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "period",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "default": "1000"
+          },
+          {
+            "name": "order_by",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "liqudity"
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "desc"
+          },
+          {
+            "name": "filters[]",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "defi_quotation_v1"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/defi/quotation/v1/market/activity/{chain}/{market_address}": {
+      "get": {
+        "operationId": "MarketActivityHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetMarketActivityResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "chain",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "market_address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "default": "1000"
+          },
+          {
+            "name": "order_by",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "created_timestamp"
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "desc"
+          }
+        ],
+        "tags": [
+          "defi_quotation_v1"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/defi/quotation/v1/market/kline/{chain}/{market_address}": {
+      "get": {
+        "operationId": "MarketKlineHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/MarketKlineListResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "chain",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "market_address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "internal",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "1s",
+              "1m",
+              "5m",
+              "15m",
+              "30m",
+              "1h",
+              "4h",
+              "6h",
+              "1d"
+            ]
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "defi_quotation_v1"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/defi/quotation/v1/market/rank/{chain}/swaps/{period}": {
+      "get": {
+        "operationId": "GetTrendingMarketHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetTrendingMarketResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "chain",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "period",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "default": "1000"
+          },
+          {
+            "name": "order_by",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "desc"
+          },
+          {
+            "name": "filters[]",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "defi_quotation_v1"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/defi/quotation/v1/market/{chain}/detail/{market_address}": {
+      "get": {
+        "operationId": "MarketDetailHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetMarketDetailResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "chain",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "market_address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "defi_quotation_v1"
+        ]
+      }
+    },
+    "/defi/quotation/v1/market/{chain}/{quote_mint}": {
+      "get": {
+        "operationId": "GetMarketInfoByQuoteMintHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/MarketRank"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "chain",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "quote_mint",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "defi_quotation_v1"
+        ]
+      }
+    },
+    "/defi/quotation/v1/meme/rank/{chain}/{pump_or_raydium}": {
+      "get": {
+        "operationId": "GetMemeMarketHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetMemeMarketResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "chain",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "pump_or_raydium",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "default": "1000"
+          },
+          {
+            "name": "order_by",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "desc"
+          },
+          {
+            "name": "performance",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "defi_quotation_v1"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/defi/quotation/v1/start/{chain}/{height}": {
+      "get": {
+        "operationId": "StartHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "chain",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "height",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "defi_quotation_v1"
+        ]
+      }
+    },
+    "/defi/quotation/v1/tokens/{chain}/search": {
+      "get": {
+        "operationId": "SearchCurrencyHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetSearchCurrencyResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "chain",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "default": "1000"
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "defi_quotation_v1"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/defi/quotation/v1/x/rank/{chain}/{period}": {
+      "get": {
+        "operationId": "GetXTopHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetXTopResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "chain",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "period",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "default": "1"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "default": "1000"
+          }
+        ],
+        "tags": [
+          "defi_quotation_v1"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/defi/quotation/v1/xtop/rank/{chain}/swaps/{period}": {
+      "get": {
+        "operationId": "GetXTopMarketHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetXTopMarketResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "chain",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "period",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "default": "1000"
+          },
+          {
+            "name": "order_by",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "desc"
+          },
+          {
+            "name": "filters[]",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "defi_quotation_v1"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/order/v1/trade/order": {
+      "post": {
+        "operationId": "CreateOrderHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateOrderResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateOrderRequest"
+            }
+          }
+        ],
+        "tags": [
+          "order_v1"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "AccountCurrency": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 唯一标识符"
+        },
+        "chain": {
+          "type": "string",
+          "description": " 所属链"
+        },
+        "logo": {
+          "type": "string",
+          "description": " 代币 logo 链接"
+        },
+        "address": {
+          "type": "string",
+          "description": " 代币地址"
+        },
+        "quote_mtin_address": {
+          "type": "string",
+          "description": " 池地址"
+        },
+        "symbol": {
+          "type": "string",
+          "description": " 代币符号"
+        },
+        "volume": {
+          "type": "number",
+          "format": "double",
+          "description": " 交易量"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "description": " 代币价格"
+        },
+        "initial_liquidity": {
+          "type": "number",
+          "format": "double",
+          "description": " 初始流动性"
+        },
+        "liquidity": {
+          "type": "number",
+          "format": "double",
+          "description": " 当前流动性"
+        },
+        "telegram": {
+          "type": "string",
+          "description": " Telegram 链接"
+        },
+        "twitter_username": {
+          "type": "string",
+          "description": " Twitter 用户名"
+        },
+        "website": {
+          "type": "string",
+          "description": " 官网链接"
+        },
+        "buys": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 买入笔数"
+        },
+        "sells": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 卖出笔数"
+        },
+        "swaps": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 30天交换数量"
+        },
+        "unrealized_profits": {
+          "type": "number",
+          "format": "double",
+          "description": " 未实现盈亏"
+        },
+        "unrealized_profits_percent": {
+          "type": "number",
+          "format": "double",
+          "description": " 未实现盈亏百分比"
+        },
+        "total_profit": {
+          "type": "number",
+          "format": "double",
+          "description": " 总盈亏"
+        },
+        "total_profit_percent": {
+          "type": "number",
+          "format": "double",
+          "description": " 总盈亏百分比"
+        },
+        "token_price_usd": {
+          "type": "number",
+          "format": "double",
+          "description": " 余额（USDT）"
+        },
+        "token_num": {
+          "type": "number",
+          "format": "double",
+          "description": " 代币数量当前地址"
+        },
+        "position_percent": {
+          "type": "number",
+          "format": "double",
+          "description": " 仓位百分比"
+        },
+        "bought_avg_price": {
+          "type": "number",
+          "format": "double",
+          "description": " 买入均价"
+        },
+        "sold_avg_price": {
+          "type": "number",
+          "format": "double",
+          "description": " 卖出均价"
+        },
+        "main_price": {
+          "type": "number",
+          "format": "double",
+          "description": " 主网币价"
+        },
+        "enter_address": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 代币进入地址的时间戳"
+        }
+      },
+      "title": "AccountCurrency",
+      "required": [
+        "id",
+        "chain",
+        "logo",
+        "address",
+        "quote_mtin_address",
+        "symbol",
+        "volume",
+        "price",
+        "initial_liquidity",
+        "liquidity",
+        "telegram",
+        "twitter_username",
+        "website",
+        "buys",
+        "sells",
+        "swaps",
+        "unrealized_profits",
+        "unrealized_profits_percent",
+        "total_profit",
+        "total_profit_percent",
+        "token_price_usd",
+        "token_num",
+        "position_percent",
+        "bought_avg_price",
+        "sold_avg_price",
+        "main_price",
+        "enter_address"
+      ]
+    },
+    "AccountSummary": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 唯一标识符"
+        },
+        "chain": {
+          "type": "string",
+          "description": " 所属链"
+        },
+        "logo": {
+          "type": "string",
+          "description": " 代币 logo 链接"
+        },
+        "address": {
+          "type": "string",
+          "description": " 代币地址"
+        },
+        "pool_address": {
+          "type": "string",
+          "description": " 池地址"
+        },
+        "sells": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 卖出笔数"
+        },
+        "sells_num": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 卖出数量"
+        },
+        "sells_num_usd": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 卖入数量（美元）"
+        },
+        "buys_num_usd": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 买入数量（美元）"
+        },
+        "buys": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 买入笔数"
+        },
+        "buys_num": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 买入数量"
+        },
+        "swaps": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 30天交换数量"
+        },
+        "symbol": {
+          "type": "string",
+          "description": " 代币符号"
+        },
+        "telegram": {
+          "type": "string",
+          "description": " Telegram 链接"
+        },
+        "twitter_username": {
+          "type": "string",
+          "description": " Twitter 用户名"
+        },
+        "volume": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 交易量"
+        },
+        "website": {
+          "type": "string",
+          "description": " 官网链接"
+        },
+        "enter_address": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 代币进入地址的时间戳"
+        },
+        "unrealized_profits": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 未实现盈亏"
+        },
+        "unrealized_profits_percent": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 未实现盈亏百分比"
+        },
+        "total_profit": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 总盈亏"
+        },
+        "total_profit_percent": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 总盈亏百分比"
+        },
+        "token_price_usd": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 余额（USDT）"
+        },
+        "token_num": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 代币数量当前地址"
+        },
+        "position_percent": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 仓位百分比"
+        },
+        "bought_avg_price": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 买入均价"
+        },
+        "sold_avg_price": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 卖出均价"
+        },
+        "main_price": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 主网币价"
+        }
+      },
+      "title": "AccountSummary",
+      "required": [
+        "id",
+        "chain",
+        "logo",
+        "address",
+        "pool_address",
+        "sells",
+        "sells_num",
+        "sells_num_usd",
+        "buys_num_usd",
+        "buys",
+        "buys_num",
+        "swaps",
+        "symbol",
+        "telegram",
+        "twitter_username",
+        "volume",
+        "website",
+        "enter_address",
+        "unrealized_profits",
+        "unrealized_profits_percent",
+        "total_profit",
+        "total_profit_percent",
+        "token_price_usd",
+        "token_num",
+        "position_percent",
+        "bought_avg_price",
+        "sold_avg_price",
+        "main_price"
+      ]
+    },
+    "Activity": {
+      "type": "object",
+      "properties": {
+        "maker_address": {
+          "type": "string",
+          "description": " 交易发起者地址"
+        },
+        "base_amount": {
+          "type": "number",
+          "format": "double",
+          "description": " 基础货币的交易量"
+        },
+        "quote_amount": {
+          "type": "number",
+          "format": "double",
+          "description": " 报价货币的交易量"
+        },
+        "volume": {
+          "type": "number",
+          "format": "double",
+          "description": " 交易金额（以美元计）"
+        },
+        "timestamp": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 交易时间戳"
+        },
+        "swap_type": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 交易类型（buy/sell）"
+        },
+        "tx_hash": {
+          "type": "string",
+          "description": " 交易哈希"
+        },
+        "quote_price": {
+          "type": "number",
+          "format": "double",
+          "description": " 交易价格（以美元计）"
+        },
+        "maker_tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": " 发起者的标签"
+        },
+        "maker_twitter_name": {
+          "type": "string",
+          "description": " 发起者的 Twitter 用户名"
+        },
+        "maker_twitter_username": {
+          "type": "string",
+          "description": " 发起者的 Twitter 显示名"
+        },
+        "maker_name": {
+          "type": "string",
+          "description": " 发起者的名称"
+        },
+        "maker_avatar": {
+          "type": "string",
+          "description": " 发起者的头像 URL"
+        },
+        "maker_ens": {
+          "type": "string",
+          "description": " 发起者的 ENS 名称"
+        },
+        "maker_token_tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": " 发起者的代币标签"
+        },
+        "token_address": {
+          "type": "string",
+          "description": " 代币地址"
+        },
+        "quote_address": {
+          "type": "string",
+          "description": " 报价货币地址"
+        },
+        "total_trade": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 总交易量"
+        },
+        "id": {
+          "type": "string",
+          "description": " 唯一 ID"
+        },
+        "is_following": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 是否已关注（0/1）"
+        },
+        "is_open_or_close": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 是否开仓或平仓"
+        },
+        "buy_cost_usd": {
+          "type": "number",
+          "format": "double",
+          "description": " 买入成本（以美元计）"
+        },
+        "balance": {
+          "type": "string",
+          "description": " 当前余额"
+        },
+        "cost": {
+          "type": "number",
+          "format": "double",
+          "description": " 总成本"
+        },
+        "history_bought_amount": {
+          "type": "number",
+          "format": "double",
+          "description": " 历史买入总量"
+        },
+        "history_sold_income": {
+          "type": "number",
+          "format": "double",
+          "description": " 历史卖出收益"
+        },
+        "history_sold_amount": {
+          "type": "number",
+          "format": "double",
+          "description": " 历史卖出总量"
+        },
+        "unrealized_profit": {
+          "type": "number",
+          "format": "double",
+          "description": " 未实现利润"
+        },
+        "realized_profit": {
+          "type": "number",
+          "format": "double",
+          "description": " 已实现利润"
+        }
+      },
+      "title": "Activity",
+      "required": [
+        "maker_address",
+        "base_amount",
+        "quote_amount",
+        "volume",
+        "timestamp",
+        "swap_type",
+        "tx_hash",
+        "quote_price",
+        "maker_tags",
+        "maker_twitter_name",
+        "maker_twitter_username",
+        "maker_name",
+        "maker_avatar",
+        "maker_ens",
+        "maker_token_tags",
+        "token_address",
+        "quote_address",
+        "total_trade",
+        "id",
+        "is_following",
+        "is_open_or_close",
+        "buy_cost_usd",
+        "balance",
+        "cost",
+        "history_bought_amount",
+        "history_sold_income",
+        "history_sold_amount",
+        "unrealized_profit",
+        "realized_profit"
+      ]
+    },
+    "AddFollowTokenRequest": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "description": " 关注代币"
+        },
+        "chain_id": {
+          "type": "string",
+          "description": " 关注的链"
+        }
+      },
+      "title": "AddFollowTokenRequest",
+      "required": [
+        "token",
+        "chain_id"
+      ]
+    },
+    "AddFollowTokenResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": " 消息"
+        }
+      },
+      "title": "AddFollowTokenResponse",
+      "required": [
+        "message"
+      ]
+    },
+    "CancelFollowTokenRequest": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "description": " 关注代币"
+        },
+        "chain_id": {
+          "type": "string",
+          "description": " 关注的链"
+        }
+      },
+      "title": "CancelFollowTokenRequest",
+      "required": [
+        "token",
+        "chain_id"
+      ]
+    },
+    "CancelFollowTokenResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": " 消息"
+        }
+      },
+      "title": "CancelFollowTokenResponse",
+      "required": [
+        "message"
+      ]
+    },
+    "CancelOrderRequest": {
+      "type": "object",
+      "properties": {
+        "order_id": {
+          "type": "string",
+          "description": " 订单ID 必要"
+        }
+      },
+      "title": "CancelOrderRequest",
+      "required": [
+        "order_id"
+      ]
+    },
+    "CreateOrderRequest": {
+      "type": "object",
+      "properties": {
+        "chain": {
+          "type": "string",
+          "description": "链 必要"
+        },
+        "market_address": {
+          "type": "string",
+          "description": "代币地址 必要"
+        },
+        "order_type": {
+          "type": "integer",
+          "format": "int64",
+          "description": "订单类型 必要 market 市价单 limit 限价单"
+        },
+        "sz": {
+          "type": "number",
+          "format": "double",
+          "description": "数量 必要 控制买入买出数量"
+        },
+        "px": {
+          "type": "number",
+          "format": "double",
+          "description": "价格 必要"
+        },
+        "side": {
+          "type": "integer",
+          "format": "int64",
+          "description": "方向 必要 buy 买入 sell 卖出"
+        },
+        "slippage": {
+          "type": "integer",
+          "format": "int64",
+          "description": "滑点 可选"
+        },
+        "transaction_hash": {
+          "type": "string",
+          "description": "交易hash 可选"
+        }
+      },
+      "title": "CreateOrderRequest",
+      "required": [
+        "chain",
+        "market_address",
+        "order_type",
+        "sz",
+        "px",
+        "side",
+        "slippage",
+        "transaction_hash"
+      ]
+    },
+    "CreateOrderResponse": {
+      "type": "object",
+      "properties": {
+        "order_id": {
+          "type": "string",
+          "description": "订单id"
+        }
+      },
+      "title": "CreateOrderResponse",
+      "required": [
+        "order_id"
+      ]
+    },
+    "Currency": {
+      "type": "object",
+      "properties": {
+        "follow": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否关注"
+        },
+        "logo": {
+          "type": "string",
+          "description": " logo"
+        },
+        "symbol": {
+          "type": "string",
+          "description": " 货币符号"
+        },
+        "chain": {
+          "type": "string",
+          "description": " 链"
+        },
+        "address": {
+          "type": "string",
+          "description": " 代币地址"
+        },
+        "quote_mint_address": {
+          "type": "string",
+          "description": " 池地址"
+        },
+        "liquidity": {
+          "type": "number",
+          "format": "double",
+          "description": " 24小时池流动性"
+        },
+        "volume_24h": {
+          "type": "number",
+          "format": "double",
+          "description": " 池交易量"
+        }
+      },
+      "title": "Currency",
+      "required": [
+        "follow",
+        "logo",
+        "symbol",
+        "chain",
+        "address",
+        "quote_mint_address",
+        "liquidity",
+        "volume_24h"
+      ]
+    },
+    "DevDetail": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "creator_address": {
+          "type": "string"
+        },
+        "creator_token_balance": {
+          "type": "number",
+          "format": "double"
+        },
+        "creator_token_status": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "top_10_holder_rate": {
+          "type": "number",
+          "format": "double"
+        },
+        "telegram": {
+          "type": "string"
+        },
+        "twitter_username": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        }
+      },
+      "title": "DevDetail",
+      "required": [
+        "address",
+        "creator_address",
+        "creator_token_balance",
+        "creator_token_status",
+        "top_10_holder_rate",
+        "telegram",
+        "twitter_username",
+        "website"
+      ]
+    },
+    "GetAccountRequest": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": "钱包地址"
+        },
+        "period": {
+          "type": "string",
+          "description": "周期 7d 30d"
+        }
+      },
+      "title": "GetAccountRequest",
+      "required": [
+        "address",
+        "period"
+      ]
+    },
+    "GetAccountResponse": {
+      "type": "object",
+      "properties": {
+        "nickname": {
+          "type": "string",
+          "description": " 昵称"
+        },
+        "initialfunding": {
+          "type": "number",
+          "format": "double",
+          "description": " 初始资金"
+        },
+        "funding": {
+          "type": "number",
+          "format": "double",
+          "description": " 资金"
+        },
+        "moneyperday": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/float64"
+          },
+          "description": " 资金每日变化数组"
+        },
+        "unrealized_profits": {
+          "type": "number",
+          "format": "double",
+          "description": " 未实现盈亏"
+        },
+        "total_profit": {
+          "type": "number",
+          "format": "double",
+          "description": " 总盈亏"
+        },
+        "buy": {
+          "type": "number",
+          "format": "double",
+          "description": " 买入次数"
+        },
+        "sell": {
+          "type": "number",
+          "format": "double",
+          "description": " 卖出次数"
+        }
+      },
+      "title": "GetAccountResponse",
+      "required": [
+        "nickname",
+        "initialfunding",
+        "funding",
+        "moneyperday",
+        "unrealized_profits",
+        "total_profit",
+        "buy",
+        "sell"
+      ]
+    },
+    "GetAccountSummaryRequest": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": " 账户地址"
+        }
+      },
+      "title": "GetAccountSummaryRequest",
+      "required": [
+        "address"
+      ]
+    },
+    "GetAccountSummaryResponse": {
+      "type": "object",
+      "properties": {
+        "total_count": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 总数"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AccountSummary"
+          }
+        }
+      },
+      "title": "GetAccountSummaryResponse",
+      "required": [
+        "total_count",
+        "list"
+      ]
+    },
+    "GetFollowMarketRequest": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "default": "1000"
+        },
+        "order_by": {
+          "type": "string",
+          "default": "liqudity"
+        },
+        "direction": {
+          "type": "string",
+          "default": "desc"
+        },
+        "filters[]": {
+          "type": "string"
+        }
+      },
+      "title": "GetFollowMarketRequest",
+      "required": [
+        "page",
+        "size",
+        "order_by",
+        "direction"
+      ]
+    },
+    "GetFollowMarketResponse": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MarketRank"
+          }
+        }
+      },
+      "title": "GetFollowMarketResponse",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
+    "GetMarketActivityRequest": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "default": "1000"
+        },
+        "order_by": {
+          "type": "string",
+          "default": "created_timestamp"
+        },
+        "direction": {
+          "type": "string",
+          "default": "desc"
+        }
+      },
+      "title": "GetMarketActivityRequest",
+      "required": [
+        "page",
+        "size",
+        "order_by",
+        "direction"
+      ]
+    },
+    "GetMarketActivityResponse": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Activity"
+          }
+        }
+      },
+      "title": "GetMarketActivityResponse",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
+    "GetMarketByMintAddress": {
+      "type": "object",
+      "title": "GetMarketByMintAddress"
+    },
+    "GetMarketDetailRequest": {
+      "type": "object",
+      "title": "GetMarketDetailRequest"
+    },
+    "GetMarketDetailResponse": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": " 市场地址"
+        },
+        "symbol": {
+          "type": "string",
+          "description": " 代币符号"
+        },
+        "name": {
+          "type": "string",
+          "description": " 代币名称"
+        },
+        "decimals": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 代币小数位"
+        },
+        "logo": {
+          "type": "string",
+          "description": " 代币 Logo 链接"
+        },
+        "biggest_pool_address": {
+          "type": "string",
+          "description": " 最大池地址"
+        },
+        "open_timestamp": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 开放时间戳"
+        },
+        "holder_count": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 持有者数量"
+        },
+        "circulating_supply": {
+          "type": "number",
+          "format": "double",
+          "description": " 流通供应量"
+        },
+        "total_supply": {
+          "type": "number",
+          "format": "double",
+          "description": " 总供应量"
+        },
+        "max_supply": {
+          "type": "number",
+          "format": "double",
+          "description": " 最大供应量"
+        },
+        "liquidity": {
+          "type": "number",
+          "format": "double",
+          "description": " 流动性"
+        },
+        "creation_timestamp": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 创建时间戳"
+        },
+        "base_price": {
+          "type": "number",
+          "format": "double",
+          "description": " 流动性"
+        },
+        "follow": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否关注"
+        },
+        "pool": {
+          "$ref": "#/definitions/PoolDetail",
+          "description": " 池详情"
+        },
+        "dev": {
+          "$ref": "#/definitions/DevDetail",
+          "description": " 开发者信息"
+        },
+        "price": {
+          "$ref": "#/definitions/PriceDetail",
+          "description": " 价格详情"
+        }
+      },
+      "title": "GetMarketDetailResponse",
+      "required": [
+        "address",
+        "symbol",
+        "name",
+        "decimals",
+        "logo",
+        "biggest_pool_address",
+        "open_timestamp",
+        "holder_count",
+        "circulating_supply",
+        "total_supply",
+        "max_supply",
+        "liquidity",
+        "creation_timestamp",
+        "base_price",
+        "follow",
+        "pool",
+        "dev",
+        "price"
+      ]
+    },
+    "GetMarketKlineRequest": {
+      "type": "object",
+      "properties": {
+        "internal": {
+          "type": "string",
+          "enum": [
+            "1s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "4h",
+            "6h",
+            "1d"
+          ]
+        },
+        "from": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "to": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "GetMarketKlineRequest",
+      "required": [
+        "internal",
+        "from",
+        "to"
+      ]
+    },
+    "GetMarketRankListRequest": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "default": "1000"
+        },
+        "order_by": {
+          "type": "string"
+        },
+        "direction": {
+          "type": "string",
+          "default": "desc"
+        },
+        "filters[]": {
+          "type": "string"
+        }
+      },
+      "title": "GetMarketRankListRequest",
+      "required": [
+        "page",
+        "size",
+        "order_by",
+        "direction"
+      ]
+    },
+    "GetMemeMarketRequest": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "default": "1000"
+        },
+        "order_by": {
+          "type": "string"
+        },
+        "direction": {
+          "type": "string",
+          "default": "desc"
+        },
+        "performance": {
+          "type": "string"
+        }
+      },
+      "title": "GetMemeMarketRequest",
+      "required": [
+        "page",
+        "size",
+        "order_by",
+        "direction"
+      ]
+    },
+    "GetMemeMarketResponse": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MarketRank"
+          }
+        }
+      },
+      "title": "GetMemeMarketResponse",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
+    "GetSearchCurrencyRequest": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "default": "1000"
+        },
+        "q": {
+          "type": "string"
+        }
+      },
+      "title": "GetSearchCurrencyRequest",
+      "required": [
+        "page",
+        "size",
+        "q"
+      ]
+    },
+    "GetSearchCurrencyResponse": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Currency"
+          }
+        }
+      },
+      "title": "GetSearchCurrencyResponse",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
+    "GetTokenRequest": {
+      "type": "object",
+      "properties": {
+        "publickey": {
+          "type": "string",
+          "description": " 签名地址"
+        },
+        "signature": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/byte"
+          },
+          "description": " 签名"
+        }
+      },
+      "title": "GetTokenRequest",
+      "required": [
+        "publickey",
+        "signature"
+      ]
+    },
+    "GetTokenResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "description": " token"
+        }
+      },
+      "title": "GetTokenResponse",
+      "required": [
+        "token"
+      ]
+    },
+    "GetTrendingMarketRequest": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "default": "1000"
+        },
+        "order_by": {
+          "type": "string"
+        },
+        "direction": {
+          "type": "string",
+          "default": "desc"
+        },
+        "filters[]": {
+          "type": "string"
+        }
+      },
+      "title": "GetTrendingMarketRequest",
+      "required": [
+        "page",
+        "size",
+        "order_by",
+        "direction"
+      ]
+    },
+    "GetTrendingMarketResponse": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MarketRank"
+          }
+        }
+      },
+      "title": "GetTrendingMarketResponse",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
+    "GetXTopMarketRequest": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "default": "1000"
+        },
+        "order_by": {
+          "type": "string"
+        },
+        "direction": {
+          "type": "string",
+          "default": "desc"
+        },
+        "filters[]": {
+          "type": "string"
+        }
+      },
+      "title": "GetXTopMarketRequest",
+      "required": [
+        "page",
+        "size",
+        "order_by",
+        "direction"
+      ]
+    },
+    "GetXTopMarketResponse": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MarketRank"
+          }
+        }
+      },
+      "title": "GetXTopMarketResponse",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
+    "GetXTopRequest": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64",
+          "default": "1"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "default": "1000"
+        }
+      },
+      "title": "GetXTopRequest",
+      "required": [
+        "page",
+        "size"
+      ]
+    },
+    "GetXTopResponse": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/XTop"
+          }
+        }
+      },
+      "title": "GetXTopResponse",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
+    "MarketKlineListResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MarketKlineResponse"
+          }
+        }
+      },
+      "title": "MarketKlineListResponse",
+      "required": [
+        "items"
+      ]
+    },
+    "MarketKlineResponse": {
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "number",
+          "format": "double"
+        },
+        "close": {
+          "type": "number",
+          "format": "double"
+        },
+        "high": {
+          "type": "number",
+          "format": "double"
+        },
+        "low": {
+          "type": "number",
+          "format": "double"
+        },
+        "volume": {
+          "type": "number",
+          "format": "double"
+        },
+        "time": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "MarketKlineResponse",
+      "required": [
+        "open",
+        "close",
+        "high",
+        "low",
+        "volume",
+        "time"
+      ]
+    },
+    "MarketRank": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "chain": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string",
+          "description": "市场地址"
+        },
+        "quote_mint_address": {
+          "type": "string",
+          "description": "新增-代币地址"
+        },
+        "quote_token_address": {
+          "type": "string",
+          "description": "新增-代币池中地址"
+        },
+        "base_token_address": {
+          "type": "string",
+          "description": "新增-基础币池中地址"
+        },
+        "base_mint_address": {
+          "type": "string",
+          "description": "新增-基础币地址（sol网络下默认wsol）"
+        },
+        "symbol": {
+          "type": "string",
+          "description": "quoteSymbol"
+        },
+        "logo": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "description": "quotePrice"
+        },
+        "base_price": {
+          "type": "number",
+          "format": "double",
+          "description": "主网币地址"
+        },
+        "swaps": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "volume": {
+          "type": "number",
+          "format": "double"
+        },
+        "liquidity": {
+          "type": "number",
+          "format": "double",
+          "description": "当前流动性 USD"
+        },
+        "market_cap": {
+          "type": "number",
+          "format": "double"
+        },
+        "hot_level": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pool_creation_timestamp": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "holder_count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "twitter_username": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "telegram": {
+          "type": "string"
+        },
+        "open_timestamp": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "price_change_percent1m": {
+          "type": "number",
+          "format": "double"
+        },
+        "price_change_percent5m": {
+          "type": "number",
+          "format": "double"
+        },
+        "price_change_percent30m": {
+          "type": "number",
+          "format": "double",
+          "description": "新增-30分钟涨跌幅"
+        },
+        "price_change_percent1h": {
+          "type": "number",
+          "format": "double"
+        },
+        "price_change_percent6h": {
+          "type": "number",
+          "format": "double"
+        },
+        "price_change_percent24h": {
+          "type": "number",
+          "format": "double"
+        },
+        "buys": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sells": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "initial_liquidity": {
+          "type": "number",
+          "format": "double",
+          "description": "初始化流动性 USD"
+        },
+        "is_show_alert": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "是否提示警告"
+        },
+        "top_10_holder_rate": {
+          "type": "number",
+          "format": "double",
+          "description": "top10的持仓用户是否大于30%的总供应量"
+        },
+        "renounced_mint": {
+          "type": "integer",
+          "format": "int64",
+          "description": "禁止挖矿"
+        },
+        "renounced_freeze_account": {
+          "type": "integer",
+          "format": "int64",
+          "description": "禁用冻结权限"
+        },
+        "audit_lp_burned": {
+          "type": "integer",
+          "format": "int64",
+          "description": "lp是否已销毁"
+        },
+        "launchpad": {
+          "type": "string"
+        },
+        "creator_token_status": {
+          "type": "string"
+        },
+        "creator_close": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "MarketRank",
+      "required": [
+        "id",
+        "chain",
+        "address",
+        "quote_mint_address",
+        "quote_token_address",
+        "base_token_address",
+        "base_mint_address",
+        "symbol",
+        "logo",
+        "price",
+        "base_price",
+        "swaps",
+        "volume",
+        "liquidity",
+        "market_cap",
+        "hot_level",
+        "pool_creation_timestamp",
+        "holder_count",
+        "twitter_username",
+        "website",
+        "telegram",
+        "open_timestamp",
+        "price_change_percent1m",
+        "price_change_percent5m",
+        "price_change_percent30m",
+        "price_change_percent1h",
+        "price_change_percent6h",
+        "price_change_percent24h",
+        "buys",
+        "sells",
+        "initial_liquidity",
+        "is_show_alert",
+        "top_10_holder_rate",
+        "renounced_mint",
+        "renounced_freeze_account",
+        "audit_lp_burned",
+        "launchpad",
+        "creator_token_status",
+        "creator_close"
+      ]
+    },
+    "MarketRankListResponse": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MarketRank"
+          }
+        }
+      },
+      "title": "MarketRankListResponse",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
+    "Plate": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "logo": {
+          "type": "string"
+        },
+        "symbol": {
+          "type": "string"
+        },
+        "chain": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "quote_mint_address": {
+          "type": "string"
+        },
+        "market_cap": {
+          "type": "number",
+          "format": "double"
+        },
+        "volume": {
+          "type": "number",
+          "format": "double"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "initial_liquidity": {
+          "type": "number",
+          "format": "double"
+        },
+        "liquidity": {
+          "type": "number",
+          "format": "double"
+        },
+        "trend": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "telegram": {
+          "type": "string"
+        },
+        "twitter_username": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        }
+      },
+      "title": "Plate",
+      "required": [
+        "id",
+        "logo",
+        "symbol",
+        "chain",
+        "address",
+        "quote_mint_address",
+        "market_cap",
+        "volume",
+        "price",
+        "initial_liquidity",
+        "liquidity",
+        "trend",
+        "telegram",
+        "twitter_username",
+        "website"
+      ]
+    },
+    "PoolDetail": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "quote_mint_address": {
+          "type": "string"
+        },
+        "quote_address": {
+          "type": "string"
+        },
+        "quote_symbol": {
+          "type": "string"
+        },
+        "liquidity": {
+          "type": "number",
+          "format": "double"
+        },
+        "base_reserve": {
+          "type": "number",
+          "format": "double"
+        },
+        "quote_reserve": {
+          "type": "number",
+          "format": "double"
+        },
+        "initial_liquidity": {
+          "type": "number",
+          "format": "double"
+        },
+        "initial_base_reserve": {
+          "type": "number",
+          "format": "double"
+        },
+        "initial_quote_reserve": {
+          "type": "number",
+          "format": "double"
+        },
+        "creation_timestamp": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "base_reserve_value": {
+          "type": "number",
+          "format": "double"
+        },
+        "quote_reserve_value": {
+          "type": "number",
+          "format": "double"
+        },
+        "quote_vault_address": {
+          "type": "string"
+        },
+        "base_vault_address": {
+          "type": "string"
+        },
+        "creator": {
+          "type": "string"
+        },
+        "exchange": {
+          "type": "string"
+        },
+        "token0_address": {
+          "type": "string"
+        },
+        "token1_address": {
+          "type": "string"
+        },
+        "base_address": {
+          "type": "string"
+        }
+      },
+      "title": "PoolDetail",
+      "required": [
+        "address",
+        "quote_mint_address",
+        "quote_address",
+        "quote_symbol",
+        "liquidity",
+        "base_reserve",
+        "quote_reserve",
+        "initial_liquidity",
+        "initial_base_reserve",
+        "initial_quote_reserve",
+        "creation_timestamp",
+        "base_reserve_value",
+        "quote_reserve_value",
+        "quote_vault_address",
+        "base_vault_address",
+        "creator",
+        "exchange",
+        "token0_address",
+        "token1_address",
+        "base_address"
+      ]
+    },
+    "PriceDetail": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "price_1m": {
+          "type": "number",
+          "format": "double"
+        },
+        "price_5m": {
+          "type": "number",
+          "format": "double"
+        },
+        "price_1h": {
+          "type": "number",
+          "format": "double"
+        },
+        "price_6h": {
+          "type": "number",
+          "format": "double"
+        },
+        "price_24h": {
+          "type": "number",
+          "format": "double"
+        },
+        "buys_1m": {
+          "type": "number",
+          "format": "double"
+        },
+        "buys_5m": {
+          "type": "number",
+          "format": "double"
+        },
+        "buys_1h": {
+          "type": "number",
+          "format": "double"
+        },
+        "buys_6h": {
+          "type": "number",
+          "format": "double"
+        },
+        "buys_24h": {
+          "type": "number",
+          "format": "double"
+        },
+        "sells_1m": {
+          "type": "number",
+          "format": "double"
+        },
+        "sells_5m": {
+          "type": "number",
+          "format": "double"
+        },
+        "sells_1h": {
+          "type": "number",
+          "format": "double"
+        },
+        "sells_6h": {
+          "type": "number",
+          "format": "double"
+        },
+        "sells_24h": {
+          "type": "number",
+          "format": "double"
+        },
+        "volume_1m": {
+          "type": "number",
+          "format": "double"
+        },
+        "volume_5m": {
+          "type": "number",
+          "format": "double"
+        },
+        "volume_1h": {
+          "type": "number",
+          "format": "double"
+        },
+        "volume_6h": {
+          "type": "number",
+          "format": "double"
+        },
+        "volume_24h": {
+          "type": "number",
+          "format": "double"
+        },
+        "buy_volume_1m": {
+          "type": "number",
+          "format": "double"
+        },
+        "buy_volume_5m": {
+          "type": "number",
+          "format": "double"
+        },
+        "buy_volume_1h": {
+          "type": "number",
+          "format": "double"
+        },
+        "buy_volume_6h": {
+          "type": "number",
+          "format": "double"
+        },
+        "buy_volume_24h": {
+          "type": "number",
+          "format": "double"
+        },
+        "sell_volume_1m": {
+          "type": "number",
+          "format": "double"
+        },
+        "sell_volume_5m": {
+          "type": "number",
+          "format": "double"
+        },
+        "sell_volume_1h": {
+          "type": "number",
+          "format": "double"
+        },
+        "sell_volume_6h": {
+          "type": "number",
+          "format": "double"
+        },
+        "sell_volume_24h": {
+          "type": "number",
+          "format": "double"
+        },
+        "market_cap": {
+          "type": "number",
+          "format": "double"
+        },
+        "volume": {
+          "type": "number",
+          "format": "double"
+        },
+        "swaps": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sells": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "buys": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "PriceDetail",
+      "required": [
+        "address",
+        "price",
+        "price_1m",
+        "price_5m",
+        "price_1h",
+        "price_6h",
+        "price_24h",
+        "buys_1m",
+        "buys_5m",
+        "buys_1h",
+        "buys_6h",
+        "buys_24h",
+        "sells_1m",
+        "sells_5m",
+        "sells_1h",
+        "sells_6h",
+        "sells_24h",
+        "volume_1m",
+        "volume_5m",
+        "volume_1h",
+        "volume_6h",
+        "volume_24h",
+        "buy_volume_1m",
+        "buy_volume_5m",
+        "buy_volume_1h",
+        "buy_volume_6h",
+        "buy_volume_24h",
+        "sell_volume_1m",
+        "sell_volume_5m",
+        "sell_volume_1h",
+        "sell_volume_6h",
+        "sell_volume_24h",
+        "market_cap",
+        "volume",
+        "swaps",
+        "sells",
+        "buys"
+      ]
+    },
+    "Request": {
+      "type": "object",
+      "title": "Request"
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "Response",
+      "required": [
+        "message"
+      ]
+    },
+    "StartRequest": {
+      "type": "object",
+      "title": "StartRequest"
+    },
+    "UpdateAccountRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": " 名称"
+        }
+      },
+      "title": "UpdateAccountRequest",
+      "required": [
+        "name"
+      ]
+    },
+    "UpdateAccountResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": " 消息"
+        }
+      },
+      "title": "UpdateAccountResponse",
+      "required": [
+        "message"
+      ]
+    },
+    "XTop": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "plate": {
+          "type": "string"
+        },
+        "plate_trend": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "plate_market_cap": {
+          "type": "number",
+          "format": "double"
+        },
+        "plate_swaps": {
+          "type": "number",
+          "format": "double"
+        },
+        "plate_market": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Plate"
+          }
+        }
+      },
+      "title": "XTop",
+      "required": [
+        "id",
+        "plate",
+        "plate_trend",
+        "plate_market_cap",
+        "plate_swaps",
+        "plate_market"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}

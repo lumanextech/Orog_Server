@@ -1,0 +1,38 @@
+syntax = "v1"
+
+type CreateOrderRequest  {
+    Chain string `json:"chain"` //链 必要
+    MarketAddress string `json:"market_address"` //代币地址 必要
+    OrderType int64 `json:"order_type"`   //订单类型 必要 market 市价单 limit 限价单
+    Sz float64 `json:"sz"`   //数量 必要 控制买入买出数量
+    Px float64 `json:"px"`   //价格 必要
+    Side int64 `json:"side"`   //方向 必要 buy 买入 sell 卖出
+    Slippage int64 `json:"slippage"`   //滑点 可选
+    TransactionHash string `json:"transaction_hash"`   //交易hash 可选
+}
+
+type CreateOrderResponse  {
+    OrderId string `json:"order_id"`//订单id
+}
+
+type CancelOrderRequest {
+    OrderId string `json:"order_id"` // 订单ID 必要
+}
+
+
+@server (
+    jwt:        Auth
+    prefix:   /order/v1
+    group:    order_v1
+    timeout:  3s
+    maxBytes: 1048576 // 1MB
+)
+service app-api {
+    // Create a new order 创建新订单  速率限制每2秒60请求
+    @handler CreateOrderHandler
+    post /trade/order (CreateOrderRequest) returns (CreateOrderResponse)
+  
+    // 取消订单  只有挂单需要取消订单
+    //@handler CancelOrderHandler
+    //post /trade/order/cancel (CancelOrderRequest) returns (CancelOrderResponse)
+}

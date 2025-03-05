@@ -1,0 +1,124 @@
+syntax = "proto3";
+
+package tx;
+
+option go_package = "github.com/simance-ai/smdx/rpcx/chains/common/tx";
+
+
+message MarketKline {
+  string chain = 1;
+  string market_address = 2;
+  double o = 3;
+  double h = 4;
+  double l = 5;
+  double c = 6;
+  double v = 7;
+  int64 timestamp = 8;
+}
+
+message Market {
+  int64 id = 1;
+  string address = 2; //市场地址
+  string base_token_address = 3; //基础token地址
+  string quote_token_address = 4; //引用token地址
+  string base_symbol = 5; //基础代币符号
+  string quote_symbol = 6; //引用代币符号
+  double base_price = 7; // 基础代币价格
+  double quote_price = 8; //引用代币价格
+  string market_type = 9; //市场类型: raydium, pump
+  int64 created_timestamp = 10;//创建时间戳
+  double base_vault = 11; //基础代币池中数量
+  double quote_vault = 12; //引用代币池中数量
+  int64 holder_count = 13; //持有者数量
+  int64 sells_24h = 14; //24小时卖出数量
+  int64 buys_24h = 15; //24小时买入数量
+  double volume_24h = 16;//24小时成交额
+
+  double price_change_percent1m = 17;//1分钟涨跌幅
+  double price_change_percent5m = 18;//5分钟涨跌幅
+  double price_change_percent1h = 19;//1小时涨跌幅
+  double price_change_percent6h = 20;//6小时涨跌幅
+  double price_change_percent24h = 21;//24小时涨跌幅
+
+  double liquidity = 22; //池子usd大小
+  double market_cap = 23; //市值usd大小
+  int64 open_timestamp = 24; //开始时间
+
+  string base_icon = 25;//基础币ICON
+  string quote_icon = 26;//应用币ICON
+  double init_base_vault = 27;//初始化基础币数量
+  double init_quote_vault = 28;//初始化引用币数量
+
+  string base_mint_address = 29; //基础币地址
+  string quote_mint_address = 30; //引用币地址
+  string logo = 31; // 代币 logo 链接
+  double price_change_percent30m = 32; //30分钟涨跌幅
+}
+
+message RealTimeMarket {
+  string address = 1; // 代币地址
+  string pool_address = 2; // 池地址
+  int64 buys = 3; // 买入数量
+  string chain = 4; // 所属链
+  bool creator_close = 5; // 是否关闭创建者权限
+  string creator_token_status = 6; // 创建者代币状态
+  int64 holder_count = 7; // 持有人数量
+  int32 hot_level = 8; // 热度等级
+  int64 id = 9; // 唯一标识符
+  double initial_liquidity = 10; // 初始流动性
+  bool is_show_alert = 11; // 是否显示警告
+  string launchpad = 12; // 启动平台
+  double liquidity = 13; // 流动性
+  string logo = 14; // 代币 logo 链接
+  double market_cap = 15; // 市值
+  int64 open_timestamp = 16; // 开放时间戳
+  int64 pool_creation_timestamp = 17; // 池子创建时间戳
+  double base_price = 18; // 主网币价格
+  double price = 19; // 价格
+  double price_change_percent1h = 20; // 1 小时价格变动百分比
+  double price_change_percent1m = 21; // 1 分钟价格变动百分比
+  double price_change_percent5m = 22; // 5 分钟价格变动百分比
+  double price_change_percent6h = 23; // 6 小时价格变动百分比
+  double price_change_percent24h = 24; // 24 小时价格变动百分比
+  int64 renounced_freeze_account = 25; // 放弃冻结账户权限
+  int64 renounced_mint = 26; // 放弃铸造权限
+  int64 sells = 27; // 卖出数量
+  int64 swaps = 28; // 交换数量
+  string symbol = 29; // 代币符号
+  string telegram = 30; // Telegram 链接
+  double top_10_holder_rate = 31; // 前 10 持有人占比
+  string twitter_username = 32; // Twitter 用户名
+  double volume = 33; // 交易量
+  string website = 34; // 官网链接
+
+  string base_mint_address = 35;
+  string quote_mint_address = 36;
+  double price_change_percent30m = 37;
+  string base_token_address = 38;
+  string quote_token_address = 39;
+}
+
+
+message Tx {
+  string chain = 1;
+  string market_address = 2;
+  string tx_hash = 3;
+
+  double base_amount = 4;
+  double quote_amount = 5;
+  string base_symbol = 6;
+  string quote_symbol = 7;
+
+  double base_price = 8;
+  double quote_price = 9;
+
+  int64 created_timestamp = 10;
+  int64 block_height = 11;
+  int64 tx_index = 12;
+  string sender_address = 13;
+  string recipient_address = 14;
+  int64 tx_type = 15; // 0created, 1buy, 2sell, 3add_liquidity, 4remove_liquidity
+
+  string base_address = 16;
+  string quote_address = 17;
+}

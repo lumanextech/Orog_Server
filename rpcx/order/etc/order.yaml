@@ -1,0 +1,25 @@
+Name: order.rpc
+ListenOn: 0.0.0.0:8095
+Etcd:
+  Hosts:
+    - ${ETCD_HOSTS}:2379
+  Key: order.rpc
+  User: ${ETCD_USER}
+  Pass: ${ETCD_PASS}
+Log:
+  Mode: file
+  Level: debug
+  Path: /tmp/logs/order
+  Rotation: daily
+
+PkEncode:
+  Key: ${PK_ENCODE_KEY}
+  Iv: ${PK_ENCODE_IV}
+
+Cache:
+  - Host: 
+    Tls: false
+    Pass: "[换成自己的]"
+    Type: "[换成自己的]"
+DBConf:
+  DSN: [换成自己的]

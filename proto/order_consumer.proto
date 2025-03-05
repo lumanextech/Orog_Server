@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package order_consumer;
+
+option go_package = "./order_consumer";
+
+message Request {
+  string ping = 1;
+}
+
+message Response {
+  string pong = 1;
+}
+
+
+
+
+service OrderConsumer {
+  rpc Ping(Request) returns(Response);
+
+  rpc QueryOrders(Request) returns(Response);
+}

@@ -1,0 +1,127 @@
+networks:
+  fomo-go:
+    driver: bridge
+
+services:
+  Etcd:
+    image: 'bitnami/etcd:latest'
+    container_name: Etcd-1
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+    ports:
+      - "2379:2379"
+      - "2380:2380"
+    networks:
+      - fomo-go
+
+  Account:
+    image: 'registry.cn-hongkong.aliyuncs.com/smdx_hub/account:v1.0'
+    container_name: Account-1
+    ports:
+      - "8081:8081"
+    networks:
+      - fomo-go
+    depends_on:
+      - Etcd
+    environment:
+      - ETCD_HOSTS=Etcd
+      - PK_ENCODE_KEY=dferlopjdfertf13
+      - PK_ENCODE_IV=dferlopjdfertf13
+    volumes:
+      - ./etcs:/app/etc
+      - /tmp/logs/account:/tmp/logs/account
+
+  Ws:
+    image: 'registry.cn-hongkong.aliyuncs.com/smdx_hub/ws:v1.0'
+    container_name: Ws
+    ports:
+      - "3333:3333"
+    networks:
+      - fomo-go
+    depends_on:
+      - Etcd
+    environment:
+      - ETCD_HOSTS=Etcd
+      - KAFKA_CA_FILE=./etc/only-4096-ca-cert
+    volumes:
+      - ./etcs:/app/etc
+      - /tmp/logs/ws_1:/tmp/logs/ws
+
+  Sol-1:
+    image: 'registry.cn-hongkong.aliyuncs.com/smdx_hub/chains_sol:v1.0'
+    container_name: Sol-1
+    ports:
+      - "8090:8080"
+    networks:
+      - fomo-go
+    depends_on:
+      - Ws
+      - Account
+      - Etcd
+    environment:
+      - ETCD_HOSTS=Etcd
+      - KAFKA_CA_FILE=./etc/only-4096-ca-cert
+      - PK_ENCODE_KEY=dferlopjdfertf13
+      - PK_ENCODE_IV=dferlopjdfertf13
+    volumes:
+      - ./etcs:/app/etc
+      - /tmp/logs/sol_1:/tmp/logs/sol
+
+  Sol-2:
+    image: 'registry.cn-hongkong.aliyuncs.com/smdx_hub/chains_sol:v1.0'
+    container_name: Sol-2
+    ports:
+      - "8091:8080"
+    networks:
+      - fomo-go
+    depends_on:
+      - Ws
+      - Account
+      - Etcd
+    environment:
+      - ETCD_HOSTS=Etcd
+      - KAFKA_CA_FILE=./etc/only-4096-ca-cert
+      - PK_ENCODE_KEY=dferlopjdfertf13
+      - PK_ENCODE_IV=dferlopjdfertf13
+    volumes:
+      - ./etcs:/app/etc
+      - /tmp/logs/sol_2:/tmp/logs/sol
+
+  App:
+    image: 'registry.cn-hongkong.aliyuncs.com/smdx_hub/app:v1.0'
+    container_name: App-1
+    ports:
+      - "8888:8888"
+    networks:
+      - fomo-go
+    depends_on:
+      - Sol-1
+      - Account
+      - Order
+      - Etcd
+    environment:
+      - ETCD_HOSTS=Etcd
+    volumes:
+      - ./etcs:/app/etc
+      - /tmp/logs/app:/tmp/logs/app
+
+  Order:
+    image: 'registry.cn-hongkong.aliyuncs.com/smdx_hub/order:v1.0'
+    container_name: Order-1
+    ports:
+      - "8095:8080"
+    networks:
+      - fomo-go
+    depends_on:
+      - Ws
+      - Account
+      - Etcd
+    environment:
+      - ETCD_HOSTS=Etcd
+      - KAFKA_CA_FILE=./etc/only-4096-ca-cert
+      - PK_ENCODE_KEY=dferlopjdfertf13
+      - PK_ENCODE_IV=dferlopjdfertf13
+    volumes:
+      - ./etcs:/app/etc
+      - /tmp/logs/order:/tmp/logs/order

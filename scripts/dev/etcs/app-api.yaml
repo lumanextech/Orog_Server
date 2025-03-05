@@ -1,0 +1,42 @@
+Name: app-api
+Host: 0.0.0.0
+Port: 8888
+Etcd:
+  Hosts:
+    - ${ETCD_HOSTS}:2379
+  Key: app-api.rpc
+  User: ${ETCD_USER}
+  Pass: ${ETCD_PASS}
+Log:
+  Mode: file
+  Level: info
+  Path: /tmp/logs/app
+  Rotation: daily
+
+SolClientConf:
+  Etcd:
+    Hosts:
+      - ${ETCD_HOSTS}:2379
+    Key: sol.rpc
+
+AccountClientConf:
+  Etcd:
+    Hosts:
+      - ${ETCD_HOSTS}:2379
+    Key: account.rpc
+
+OrderClientConf:
+  Etcd:
+    Hosts:
+      - ${ETCD_HOSTS}:2379
+    Key: order.rpc
+
+Auth:
+  AccessSecret: "orog2025"
+  AccessExpire: 604800
+
+Cache:
+  - Host: redis-10673.c36089.ap-seast-1-mz.ec2.cloud.rlrcp.com:10673
+    Tls: false
+    Pass: "fz04FIGXx12ECSanWksS9rQiXXvG1kEG"
+    Type: "cluster"

@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package ws;
+
+import "common/kline.proto";
+import "common/tx.proto";
+
+option go_package = "./ws";
+
+message Request {
+  string ping = 1;
+}
+
+message Response {
+  string pong = 1;
+}
+
+message FireMarketKlineRequest {
+  repeated kline.IntervalData klines = 1;
+}
+
+message FireMarketKlineResponse {
+  string message = 1;
+}
+
+message FireMarketTxActivityRequest {
+  string market_address = 1;
+  string chain  = 2;
+  repeated tx.Tx txs = 3;
+}
+
+message FireMarketTxActivityResponse {
+  string message = 1;
+}
+
+service Ws {
+  // FireMarketKline
+  rpc FireMarketKline(FireMarketKlineRequest) returns (FireMarketKlineResponse);
+
+  rpc FireMarketTxActivity(FireMarketTxActivityRequest) returns (FireMarketTxActivityResponse);
+}
