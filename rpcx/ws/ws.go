@@ -4,9 +4,12 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/simance-ai/smdx/pkg/kqx"
-	"github.com/simance-ai/smdx/rpcx/ws/internal/consumers"
 	"net/http"
+
+	"github.com/simance-ai/smdx/pkg/rabbitmq"
+	// Kafka 包导入
+	// "github.com/simance-ai/smdx/pkg/kqx"
+	"github.com/simance-ai/smdx/rpcx/ws/internal/consumers"
 
 	"github.com/zeromicro/go-zero/rest"
 
@@ -42,14 +45,32 @@ func main() {
 	})
 	defer s.Stop()
 
-	//kqx
-	queue := kqx.MustNewQueue(c.MarketKlineTopicKafkaConf, consumers.NewMarketKlineConsumer(ctx))
-	go queue.Start()
-	defer queue.Stop()
+	// Kafka 版本的代码：
+	// //kqx 消费marketKline数据 并且推送到websocket的client
+	// queue := kqx.MustNewQueue(c.MarketKlineTopicKafkaConf, consumers.NewMarketKlineConsumer(ctx))
+	// go queue.Start()
+	// defer queue.Stop()
+	//
+	// //kqx 消费marketSwap数据 并且推送到websocket的client
+	// queue2 := kqx.MustNewQueue(c.MarketSwapTopicKafkaConf, consumers.NewMarketTxActivityConsumer(ctx))
+	// go queue2.Start()
+	// defer queue2.Stop()
 
-	queue2 := kqx.MustNewQueue(c.MarketSwapTopicKafkaConf, consumers.NewMarketTxActivityConsumer(ctx))
-	go queue2.Start()
-	defer queue2.Stop()
+	// RabbitMQ 版本的代码：
+	// 创建 RabbitMQ 客户端
+	marketKlineClient, err := rabbitmq.NewClient(c.MarketKlineTopicRabbitMQConf, consumers.NewMarketKlineConsumer(ctx))
+	if err != nil {
+		panic(err)
+	}
+
+	marketSwapClient, err := rabbitmq.NewClient(c.MarketSwapTopicRabbitMQConf, consumers.NewMarketTxActivityConsumer(ctx))
+	if err != nil {
+		panic(err)
+	}
+
+	// 启动消费者
+	go marketKlineClient.Start()
+	go marketSwapClient.Start()
 
 	restEngine, err := getRestEngine(ctx)
 	if err != nil {

@@ -37,34 +37,30 @@ WebSocket:
 App:
   Secret: "Lbhi08lqB8k7bdKLKFsSyZwPygIOvwhX"
 
-MarketKlineTopicKafkaConf:
+MarketKlineTopicRabbitMQConf:
   Name: ws
-  Brokers:
-    - alikafka-pre-cn-wuf428qaz004-1.alikafka.aliyuncs.com:9093
-    - alikafka-pre-cn-wuf428qaz004-2.alikafka.aliyuncs.com:9093
-    - alikafka-pre-cn-wuf428qaz004-3.alikafka.aliyuncs.com:9093
-  Group: beam-io-ws-dev
-  Topic: sol_market_kline_test
+  Host: 35.78.178.14
+  Port: 5672
+  Username: ccbotv2
+  Password: CcbotV2_Test
+  Vhost: /
+  Queue: test_queue
+  Exchange: ccbotv2_log_exchange
+  RoutingKey: ccbotv2_log_routing_key
   Consumers: 12
   Processors: 4
-  Username: alikafka_pre-cn-wuf428qaz004  #SASL用户名。如果是SSL接入点或SASL接入点，需配置该参数
-  Password: wYzozB93Bb03HOb2IUb2txDcpoOOuiUy
-  CaFile: ${KAFKA_CA_FILE}  #如果是SSL接入点，需配置该参数
-  Protocol: plain
 
-MarketSwapTopicKafkaConf:
+MarketSwapTopicRabbitMQConf:
   Name: ws
-  Brokers:
-    - alikafka-pre-cn-wuf428qaz004-1.alikafka.aliyuncs.com:9093
-    - alikafka-pre-cn-wuf428qaz004-2.alikafka.aliyuncs.com:9093
-    - alikafka-pre-cn-wuf428qaz004-3.alikafka.aliyuncs.com:9093
-  Group: beam-io-ws-dev
-  Topic: sol_market_swaps_test
+  Host: 35.78.178.14
+  Port: 5672
+  Username: ccbotv2
+  Password: CcbotV2_Test
+  Vhost: /
+  Queue: test_queue
+  Exchange: ccbotv2_log_exchange
+  RoutingKey: ccbotv2_log_routing_key
   Consumers: 12
   Processors: 4
-  Username: alikafka_pre-cn-wuf428qaz004  #SASL用户名。如果是SSL接入点或SASL接入点，需配置该参数
-  Password: wYzozB93Bb03HOb2IUb2txDcpoOOuiUy
-  CaFile: ${KAFKA_CA_FILE}  #如果是SSL接入点，需配置该参数
-  Protocol: plain
 
 

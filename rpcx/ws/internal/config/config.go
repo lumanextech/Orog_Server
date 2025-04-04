@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/simance-ai/smdx/pkg/kqx"
+	"github.com/simance-ai/smdx/pkg/rabbitmq"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/rest"
 	"github.com/zeromicro/go-zero/zrpc"
@@ -31,7 +31,7 @@ type Config struct {
 		Redis cache.CacheConf
 	}
 
-	MarketKlineTopicKafkaConf kqx.KqConf
+	MarketKlineTopicRabbitMQConf rabbitmq.RabbitMQConf
 
-	MarketSwapTopicKafkaConf kqx.KqConf
+	MarketSwapTopicRabbitMQConf rabbitmq.RabbitMQConf
 }
